@@ -4,7 +4,7 @@ type PropsType = {
   className: string,
   type: 'submit' | 'button' | 'reset',
   text: string,
-  clickHandler: () => void
+  clickHandler?: () => void
 }
 
 const Button = ({ className, type, text, clickHandler }: PropsType): ReactElement => {
