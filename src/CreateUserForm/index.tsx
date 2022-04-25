@@ -10,13 +10,19 @@ const CreateUserForm = () => {
   const createNewUser = async (e: React.FormEvent) => {
     e.preventDefault();
     const newUser = { username, password, location };
-    const createdUser = await userCalls.createUser(newUser);
-    console.log(createdUser);
+    try {
+      const createdUser = await userCalls.createUser(newUser);
+      console.log(createdUser);
 
-    // reset form
-    setUsername('');
-    setPassword('');
-    setLocation('');
+      // reset form
+      setUsername('');
+      setPassword('');
+      setLocation('');
+    } catch (error: any) {
+      if (error.response) {
+        console.log(error.response.data)
+      }
+    }
   };
 
   return (
