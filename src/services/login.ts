@@ -5,11 +5,11 @@ const baseUrl = 'http://localhost:8000/api/token/';
 
 const loginUser = async (credentials: UserType): Promise<AxiosResponse> => {
   const response = await axios.post(baseUrl, credentials);
-  return response.data
-}
+  return response.data;
+};
 
 const loginCalls = {
-  loginUser
-}
+  loginUser,
+};
 
-export default loginCalls
+export default loginCalls;
