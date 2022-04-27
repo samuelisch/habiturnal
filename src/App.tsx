@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 import Button from './assets/Button';
-import userCalls from './serverCalls/users';
-import journalCalls from './serverCalls/journals';
+import userCalls from './services/users';
+import journalCalls from './services/journals';
+import './App.scss';
 
 import CreateUserForm from './CreateUserForm';
 
