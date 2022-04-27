@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import Button from '../assets/Button';
-import loginCalls from '../serverCalls/login';
-import userCalls from '../serverCalls/users';
+import loginCalls from '../services/login';
+import userCalls from '../services/users';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetch, success, fail, selectAuthData, AuthSchema } from '../reducers/authSlice';
 
 const CreateUserForm = () => {
+  const dispatch = useDispatch();
+  const tokens = useSelector(selectAuthData) as AuthSchema;
   const [createUsername, setCreateUsername] = useState<string>('');
   const [createPassword, setCreatePassword] = useState<string>('');
   const [loginUsername, setLoginUsername] = useState<string>('');
   const [loginPassword, setLoginPassword] = useState<string>('');
 
-  const createNewUser = async (e: React.FormEvent) => {
+  const createNewUser = async (e: FormEvent) => {
     e.preventDefault();
     const newUser = { username: createUsername, password: createPassword };
     try {
@@ -26,16 +30,19 @@ const CreateUserForm = () => {
     }
   };
 
-  const loginUser = async (e: React.FormEvent) => {
+  const loginUser = async (e: FormEvent) => {
     e.preventDefault();
     const credentials = { username: loginUsername, password: loginPassword };
+    dispatch(fetch());
     try {
       const tokens = await loginCalls.loginUser(credentials);
       console.log(tokens);
+      dispatch(success(tokens));
     } catch (error: any) {
       if (error.response) {
         console.log(error.response.data);
       }
+      dispatch(fail(error.response));
     }
   };
 

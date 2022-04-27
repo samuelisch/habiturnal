@@ -1,10 +1,10 @@
-import { ReactElement } from 'react';
+import { FormEvent, ReactElement } from 'react';
 
 type PropsType = {
   className: string,
   type: 'submit' | 'button' | 'reset',
   text: string,
-  clickHandler?: () => void
+  clickHandler?: (e: FormEvent) => void
 }
 
 const Button = ({ className, type, text, clickHandler }: PropsType): ReactElement => {
