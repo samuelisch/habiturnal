@@ -1,16 +1,26 @@
 import { ReactElement } from 'react';
 import Button from './assets/Button';
-import userCalls from './services/users';
 import journalCalls from './services/journals';
 import './App.scss';
 
 import CreateUserForm from './CreateUserForm';
+import { fetchUsers, selectAllUsers } from './reducers/usersSlice';
+import { useAppDispatch, useAppSelector } from './reducers/hooks';
 
 const App = (): ReactElement | null => {
+  const dispatch = useAppDispatch()
+  const usersLoaded = useAppSelector(selectAllUsers);
   const getUsersIndex = async (): Promise<void> => {
-    const data = await userCalls.getUsers();
-    console.log(data);
+    await dispatch(fetchUsers())
   };
+
+  const viewUsers = async () => {
+    console.log(usersLoaded)
+  }
+
+  const viewUserById = (userId: string | number) => {
+    console.log(usersLoaded.find(user => user.id === userId))
+  }
 
   const getJournalsIndex = async (): Promise<void> => {
     const data = await journalCalls.getHabits();
@@ -25,6 +35,18 @@ const App = (): ReactElement | null => {
         type="button"
         text="Retrieve user index"
         clickHandler={getUsersIndex}
+      />
+      <Button
+        className="viewUsers"
+        type="button"
+        text="View users in store"
+        clickHandler={viewUsers}
+      />
+      <Button
+        className="viewUser"
+        type="button"
+        text="View user by id"
+        clickHandler={() => viewUserById(8)}
       />
       <Button
         className="callJournalsIndex"
