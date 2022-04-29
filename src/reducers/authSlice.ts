@@ -1,10 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import loginCalls from '../services/login';
-import { RootState, AppThunk } from './store';
+import { RootState } from './store';
 
 export interface AuthSchema {
   access: string;
   refresh: string;
+}
+
+export interface ErrorPayload {
+  data: string;
+  status: string;
 }
 
 interface AuthState {
@@ -13,11 +17,6 @@ interface AuthState {
   isLoading: boolean;
   errors: Array<ErrorPayload> | null;
   didComplete: boolean;
-}
-
-interface ErrorPayload {
-  data: string;
-  status: string;
 }
 
 const initialState: AuthState = {
