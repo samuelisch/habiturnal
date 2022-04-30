@@ -22,7 +22,7 @@ interface AuthState {
 const initialState: AuthState = {
   data: null,
   isAuthenticated: false,
-  isLoading: false,
+  isLoading: true,
   errors: null,
   didComplete: false,
 };
@@ -40,15 +40,15 @@ export const authSlice = createSlice({
       state.data = null;
       state.isAuthenticated = false;
       state.didComplete = false;
-      localStorage.removeItem('token');
+      localStorage.clear();
     },
     fetch: state => {
       state.isLoading = true;
       state.didComplete = false;
     },
     finish: state => {
-      state.isLoading = true;
-      state.didComplete = false;
+      state.isLoading = false;
+      state.didComplete = true;
     },
     success: (state, action: PayloadAction<object>) => {
       const payload = action.payload as AuthSchema;
@@ -57,14 +57,14 @@ export const authSlice = createSlice({
       state.isAuthenticated = true;
       state.errors = null;
       state.didComplete = true;
-      localStorage.setItem('token', JSON.stringify(payload.access));
+      localStorage.setItem('token', JSON.stringify(payload));
     },
     fail: (state, action: PayloadAction<Array<ErrorPayload>>) => {
       state.errors = action.payload;
       state.isLoading = false;
       state.isAuthenticated = false;
       state.didComplete = true;
-      localStorage.removeItem('token');
+      localStorage.clear();
     },
   },
 });
@@ -82,4 +82,4 @@ export const selectIsAuthenticated = (state: RootState) => {
 };
 export const selectDidComplete = (state: RootState) => state.auth.didComplete;
 
-export default authSlice.reducer
+export default authSlice.reducer;
