@@ -10,7 +10,6 @@ export interface UserSchema {
   location: string;
   date_joined: string;
   last_login: string;
-  is_admin: boolean;
 }
 
 interface UsersState {
