@@ -1,62 +1,47 @@
-import { ReactElement } from 'react';
-import Button from './assets/Button';
-import journalCalls from './services/journals';
+import { ReactElement, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.scss';
+import Home from './Home';
 
-import CreateUserForm from './CreateUserForm';
-import { fetchUsers, selectAllUsers } from './reducers/usersSlice';
-import { useAppDispatch, useAppSelector } from './reducers/hooks';
+import Login from './Login';
+import { invalidate, populate, selectIsAuthenticated } from './reducers/authSlice';
+import { useAppSelector } from './reducers/hooks';
+import Signup from './Signup';
 
 const App = (): ReactElement | null => {
-  const dispatch = useAppDispatch()
-  const usersLoaded = useAppSelector(selectAllUsers);
-  const getUsersIndex = async (): Promise<void> => {
-    await dispatch(fetchUsers())
-  };
+  const dispatch = useDispatch();
+  const isLoggedIn = useAppSelector(selectIsAuthenticated);
 
-  const viewUsers = async () => {
-    console.log(usersLoaded)
-  }
+  useEffect(() => {
+    const tokenAuth = localStorage.getItem('token');
+    if (tokenAuth) {
+      const token = JSON.parse(tokenAuth);
+      dispatch(populate(token));
+    } else {
+      dispatch(invalidate());
+    }
+  });
 
-  const viewUserById = (userId: string | number) => {
-    console.log(usersLoaded.find(user => user.id === userId))
-  }
+  const routes = (() => {
+    if (isLoggedIn) {
+      return (
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="*" element={<Navigate to="/home" replace />} />
+        </Routes>
+      );
+    }
+    return (
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    );
+  })();
 
-  const getJournalsIndex = async (): Promise<void> => {
-    const data = await journalCalls.getHabits();
-    console.log(data);
-  };
-
-  return (
-    <>
-      <h1>Hello world!</h1>
-      <Button
-        className="callUsersIndex"
-        type="button"
-        text="Retrieve user index"
-        clickHandler={getUsersIndex}
-      />
-      <Button
-        className="viewUsers"
-        type="button"
-        text="View users in store"
-        clickHandler={viewUsers}
-      />
-      <Button
-        className="viewUser"
-        type="button"
-        text="View user by id"
-        clickHandler={() => viewUserById(8)}
-      />
-      <Button
-        className="callJournalsIndex"
-        type="button"
-        text="Retrieve journals index"
-        clickHandler={getJournalsIndex}
-      />
-      <CreateUserForm />
-    </>
-  );
+  return <BrowserRouter>{routes}</BrowserRouter>;
 };
 
 export default App;
