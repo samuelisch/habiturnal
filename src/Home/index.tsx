@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Button from '../assets/Button';
+import CreateJournalForm from '../Journal/CreateJournalForm';
 import { invalidate } from '../reducers/authSlice';
 import { UserSchema } from '../reducers/usersSlice';
 import { setToken } from '../services/login';
 import userCalls from '../services/users';
+
+export const UserContext = createContext<UserSchema | null>(null);
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -51,10 +54,12 @@ const Home = () => {
   }
 
   return (
-    <>
+    <UserContext.Provider value={user}>
       {user ? <h1> Welcome, {user.username}!</h1> : ''}
       <Button className="logoutBtn" type="button" text="logout" clickHandler={logout} />
-    </>
+      <CreateJournalForm />
+
+    </UserContext.Provider>
   );
 };
 
