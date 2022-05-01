@@ -1,8 +1,8 @@
 import React, { FormEvent, useState } from 'react';
-import Button from '../assets/Button';
-import loginCalls, { setToken, TokenSchema } from '../services/login';
+import Button from '../../assets/Button';
+import loginCalls, { setToken, TokenSchema } from '../../services/login';
 import { useDispatch } from 'react-redux';
-import { fetch, success, fail } from '../reducers/authSlice';
+import { fetch, success, fail } from '../../reducers/authSlice';
 
 const Login = () => {
   const dispatch = useDispatch();

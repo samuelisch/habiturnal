@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
-import Button from '../assets/Button';
-import userCalls from '../services/users';
+import Button from '../../assets/Button';
+import userCalls from '../../services/users';
 
 const Signup = () => {
   const [createUsername, setCreateUsername] = useState<string>('');
