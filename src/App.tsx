@@ -4,10 +4,10 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import Home from './Home';
 
-import Login from './Login';
+import Login from './User/Login';
 import { invalidate, populate, selectIsAuthenticated } from './reducers/authSlice';
 import { useAppSelector } from './reducers/hooks';
-import Signup from './Signup';
+import Signup from './User/Signup';
 
 const App = (): ReactElement | null => {
   const dispatch = useDispatch();

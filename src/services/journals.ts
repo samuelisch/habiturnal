@@ -7,8 +7,14 @@ const getJournals = async (): Promise<AxiosResponse> => {
   return response.data;
 };
 
-const habitCalls = {
+const createJournal = async (): Promise<AxiosResponse> => {
+  const response = await axios.get(`${baseUrl}/journal-create/`);
+  return response.data;
+}
+
+const journalCalls = {
   getJournals,
+  createJournal,
 };
 
-export default habitCalls;
+export default journalCalls;
