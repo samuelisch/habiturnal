@@ -1,0 +1,58 @@
+import React, { FormEvent, useContext, useEffect, useState } from 'react';
+import Button from '../../assets/Button';
+import { UserContext } from '../../Home';
+import journalCalls from '../../services/journals';
+import styles from './CreateJournalForm.module.scss';
+
+const CreateJournalForm = () => {
+  const user = useContext(UserContext);
+  const [title, setTitle] = useState<string>('');
+  const [content, setContent] = useState<string>('');
+
+  const submitJournal = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!user) return; // something's really wrong if this happens
+    try {
+      const journalObject = {
+        user: user.id,
+        title,
+        content,
+      };
+      const newJournal = await journalCalls.createJournal(journalObject)
+      console.log(newJournal)
+  
+      setTitle('');
+      setContent('');
+    } catch (error: any) {
+      if (error.response) {
+        console.log(error.response.data);
+      }
+    }
+  };
+
+  return (
+    <div className={styles.Container}>
+      <h1>Journal Form</h1>
+      <form className={styles.FormContainer} onSubmit={submitJournal}>
+        <input
+          aria-label="journalTitle"
+          className={styles.TitleInput}
+          type="text"
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          placeholder="Title"
+        />
+        <textarea
+          className={styles.ContentInput}
+          value={content}
+          onChange={e => setContent(e.target.value)}
+          autoComplete="off"
+          placeholder="What's been on? ..."
+        />
+        <Button className={styles.Submit} type="submit" text="Complete reflection" />
+      </form>
+    </div>
+  );
+};
+
+export default CreateJournalForm;
