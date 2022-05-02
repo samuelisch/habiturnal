@@ -2,7 +2,8 @@ import { createContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Button from '../assets/Button';
-import CreateJournalForm from '../Journal/CreateJournalForm';
+import CreateJournalForm from '../Journals/CreateJournalForm';
+import JournalsList from '../Journals/JournalsList';
 import { invalidate } from '../reducers/authSlice';
 import { UserSchema } from '../reducers/usersSlice';
 import { setToken } from '../services/login';
@@ -19,26 +20,26 @@ const Home = () => {
 
   useEffect(() => {
     let fetching = true;
-    const tokenAuth = localStorage.getItem('token');
-    const userAuth = localStorage.getItem('username');
-    if (tokenAuth && userAuth) {
-      const token = JSON.parse(tokenAuth);
-      const username = JSON.parse(userAuth);
-      setToken(token);
-      userCalls
-        .getUserByUsername(username)
-        .then(user => {
+    (async () => {
+      const tokenAuth = localStorage.getItem('token');
+      const userAuth = localStorage.getItem('username');
+      if (tokenAuth && userAuth) {
+        try {
+          const token = JSON.parse(tokenAuth);
+          const username = JSON.parse(userAuth);
+          setToken(token);
+          const user = await userCalls.getUserByUsername(username);
           if (fetching) {
             setUser(user as UserSchema);
             setIsLoading(false);
           }
-        })
-        .catch(err => {
+        } catch (err) {
           console.error(err);
           dispatch(invalidate());
           navigate('/');
-        });
-    }
+        }
+      }
+    })();
 
     return () => {
       fetching = false;
@@ -58,11 +59,17 @@ const Home = () => {
     <UserContext.Provider value={user}>
       {user ? <h1> Welcome, {user.username}!</h1> : ''}
       <Button className="logoutBtn" type="button" text="logout" clickHandler={logout} />
-      {showingForm
-        ? <CreateJournalForm setShowingForm={setShowingForm} />
-        : <Button className="createBtn" type="button" text="New journal" clickHandler={() => setShowingForm(true)} />
-      }
-      {/* <JournalsList /> */}
+      {showingForm ? (
+        <CreateJournalForm setShowingForm={setShowingForm} />
+      ) : (
+        <Button
+          className="createBtn"
+          type="button"
+          text="New journal"
+          clickHandler={() => setShowingForm(true)}
+        />
+      )}
+      <JournalsList />
     </UserContext.Provider>
   );
 };
