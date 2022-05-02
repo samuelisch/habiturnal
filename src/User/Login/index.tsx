@@ -1,13 +1,26 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import Button from '../../assets/Button';
 import loginCalls, { setToken, TokenSchema } from '../../services/login';
 import { useDispatch } from 'react-redux';
-import { fetch, success, fail } from '../../reducers/authSlice';
+import { fetch, success, fail, populate, invalidate } from '../../reducers/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [loginUsername, setLoginUsername] = useState<string>('');
   const [loginPassword, setLoginPassword] = useState<string>('');
+
+  useEffect(() => {
+    const tokenAuth = localStorage.getItem('token');
+    if (tokenAuth) {
+      const token = JSON.parse(tokenAuth);
+      dispatch(populate(token));
+      navigate('/home');
+    } else {
+      dispatch(invalidate());
+    }
+  }, [dispatch, navigate]);
 
   const loginUser = async (e: FormEvent) => {
     e.preventDefault();
@@ -19,6 +32,7 @@ const Login = () => {
         dispatch(success(tokens));
         localStorage.setItem('username', JSON.stringify(loginUsername));
         setToken(tokens as TokenSchema);
+        navigate('/home');
       }
     } catch (error: any) {
       if (error.response) {

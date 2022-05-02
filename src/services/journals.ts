@@ -7,6 +7,7 @@ export interface JournalInputType {
   title: string;
   content: string;
   user: string | number;
+  owner: string;
 }
 
 export interface JournalType {
@@ -14,6 +15,7 @@ export interface JournalType {
   title: string;
   content: string;
   user: string | number;
+  owner: string;
   created_date: string | number | Date;
 }
 
@@ -21,6 +23,11 @@ const getJournals = async (): Promise<AxiosResponse | JournalType[]> => {
   const response = await axios.get(`${baseUrl}/journal-list/`);
   return response.data;
 };
+
+const getSingleJournal = async (id: number | string): Promise<AxiosResponse | JournalType> => {
+  const response = await axios.get(`${baseUrl}/journal-detail/${id}`);
+  return response.data
+}
 
 const createJournal = async (journalObj: JournalInputType): Promise<AxiosResponse> => {
   const config: AxiosRequestConfig = {
@@ -33,6 +40,7 @@ const createJournal = async (journalObj: JournalInputType): Promise<AxiosRespons
 
 const journalCalls = {
   getJournals,
+  getSingleJournal,
   createJournal,
 };
 

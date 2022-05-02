@@ -1,10 +1,11 @@
 import { createContext, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Button from '../assets/Button';
 import CreateJournalForm from '../Journals/CreateJournalForm';
 import JournalsList from '../Journals/JournalsList';
 import { invalidate } from '../reducers/authSlice';
+import { useAppDispatch } from '../reducers/hooks';
+import { fetchJournals } from '../reducers/journalsSlice';
 import { UserSchema } from '../reducers/usersSlice';
 import { setToken } from '../services/login';
 import userCalls from '../services/users';
@@ -12,7 +13,7 @@ import userCalls from '../services/users';
 export const UserContext = createContext<UserSchema | null>(null);
 
 const Home = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<UserSchema | null>(null);
@@ -36,7 +37,7 @@ const Home = () => {
         } catch (err) {
           console.error(err);
           dispatch(invalidate());
-          navigate('/');
+          navigate('/login');
         }
       }
     })();
@@ -46,9 +47,15 @@ const Home = () => {
     };
   }, [dispatch, navigate]);
 
+  useEffect(() => {
+    (async () => {
+      dispatch(fetchJournals());
+    })();
+  }, [dispatch]);
+
   const logout = () => {
     dispatch(invalidate());
-    navigate('/');
+    navigate('/login');
   };
 
   if (isLoading) {

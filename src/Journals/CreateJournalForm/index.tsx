@@ -21,6 +21,7 @@ const CreateJournalForm = ({ setShowingForm }: Props) => {
         user: user.id,
         title,
         content,
+        owner: user.username
       };
       const newJournal = await journalCalls.createJournal(journalObject)
       console.log(newJournal)

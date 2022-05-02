@@ -1,0 +1,8 @@
+.Container {
+  border: 1px solid rgb(51, 51, 51);
+
+  &:hover {
+    background: #eeeeee;
+    cursor: pointer;
+  }
+}

@@ -15,9 +15,14 @@ const getUserByUsername = async (username: string): Promise<AxiosResponse | User
     headers: { Authorization: token },
   };
 
-  const response = await axios.get(`${baseUrl}/user-detail/${username}`, config);
+  const response = await axios.get(`${baseUrl}/user-detail-username/${username}`, config);
   return response.data;
 };
+
+const getUserById = async (id: string | number): Promise<AxiosResponse | UserSchema> => {
+  const response = await axios.get(`${baseUrl}/user-detail-id/${id}`);
+  return response.data;
+}
 
 const createUser = async (userObj: UserType): Promise<AxiosResponse> => {
   const response = await axios.post(`${baseUrl}/user-create/`, userObj);
@@ -27,6 +32,7 @@ const createUser = async (userObj: UserType): Promise<AxiosResponse> => {
 const userCalls = {
   getUsers,
   getUserByUsername,
+  getUserById,
   createUser,
 };
 
