@@ -1,13 +1,14 @@
 import { ReactElement, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.scss';
-import Home from './Home';
+import Home from '../Home';
 
-import Login from './User/Login';
-import { invalidate, populate, selectIsAuthenticated } from './reducers/authSlice';
-import { useAppSelector } from './reducers/hooks';
-import Signup from './User/Signup';
+import Login from '../User/Login';
+import { invalidate, populate, selectIsAuthenticated } from '../reducers/authSlice';
+import { useAppSelector } from '../reducers/hooks';
+import Signup from '../User/Signup';
+import AppContainer from './AppContainer';
 
 const App = (): ReactElement | null => {
   const dispatch = useDispatch();
@@ -41,7 +42,11 @@ const App = (): ReactElement | null => {
     );
   })();
 
-  return <BrowserRouter>{routes}</BrowserRouter>;
+  return (
+    <AppContainer>
+      <>{routes}</>
+    </AppContainer>
+  );
 };
 
 export default App;
