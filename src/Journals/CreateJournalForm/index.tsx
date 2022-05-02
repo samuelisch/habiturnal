@@ -1,14 +1,12 @@
 import React, { FormEvent, useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../assets/Button';
-import { UserContext } from '../../Home';
+import { UserContext } from '../../App/ProtectedContainer';
 import journalCalls from '../../services/journals';
 import styles from './CreateJournalForm.module.scss';
 
-interface Props {
-  setShowingForm: (b: boolean) => void;
-}
-
-const CreateJournalForm = ({ setShowingForm }: Props) => {
+const CreateJournalForm = () => {
+  const navigate = useNavigate();
   const user = useContext(UserContext);
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
@@ -21,11 +19,11 @@ const CreateJournalForm = ({ setShowingForm }: Props) => {
         user: user.id,
         title,
         content,
-        owner: user.username
+        owner: user.username,
       };
-      const newJournal = await journalCalls.createJournal(journalObject)
-      console.log(newJournal)
-  
+      const newJournal = await journalCalls.createJournal(journalObject);
+      console.log(newJournal);
+
       setTitle('');
       setContent('');
     } catch (error: any) {
@@ -54,7 +52,12 @@ const CreateJournalForm = ({ setShowingForm }: Props) => {
           autoComplete="off"
           placeholder="What's been on? ..."
         />
-        <Button className={styles.Button} type="button" text="Cancel" clickHandler={() => setShowingForm(false)} />
+        <Button
+          className={styles.Button}
+          type="button"
+          text="Cancel"
+          clickHandler={() => navigate(-1)}
+        />
         <Button className={styles.Button} type="submit" text="Complete reflection" />
       </form>
     </div>

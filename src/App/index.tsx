@@ -7,6 +7,7 @@ import Login from '../User/Login';
 import Signup from '../User/Signup';
 import JournalDetailsView from '../Journals/JournalDetailsView';
 import ProtectedContainer from './ProtectedContainer';
+import CreateJournalForm from '../Journals/CreateJournalForm';
 
 const App = (): ReactElement | null => {
   return (
@@ -17,6 +18,11 @@ const App = (): ReactElement | null => {
         <Route path="/home" element={
           <ProtectedContainer>
             <Home />
+          </ProtectedContainer>
+        } />
+        <Route path="/journals/create" element={
+          <ProtectedContainer>
+            <CreateJournalForm />
           </ProtectedContainer>
         } />
         <Route path="/journals/view/:id" element={
