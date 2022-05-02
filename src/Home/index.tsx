@@ -15,6 +15,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<UserSchema | null>(null);
+  const [showingForm, setShowingForm] = useState<boolean>(false);
 
   useEffect(() => {
     let fetching = true;
@@ -57,8 +58,11 @@ const Home = () => {
     <UserContext.Provider value={user}>
       {user ? <h1> Welcome, {user.username}!</h1> : ''}
       <Button className="logoutBtn" type="button" text="logout" clickHandler={logout} />
-      <CreateJournalForm />
-
+      {showingForm
+        ? <CreateJournalForm setShowingForm={setShowingForm} />
+        : <Button className="createBtn" type="button" text="New journal" clickHandler={() => setShowingForm(true)} />
+      }
+      {/* <JournalsList /> */}
     </UserContext.Provider>
   );
 };

@@ -1,10 +1,14 @@
-import React, { FormEvent, useContext, useEffect, useState } from 'react';
+import React, { FormEvent, useContext, useState } from 'react';
 import Button from '../../assets/Button';
 import { UserContext } from '../../Home';
 import journalCalls from '../../services/journals';
 import styles from './CreateJournalForm.module.scss';
 
-const CreateJournalForm = () => {
+interface Props {
+  setShowingForm: (b: boolean) => void;
+}
+
+const CreateJournalForm = ({ setShowingForm }: Props) => {
   const user = useContext(UserContext);
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
@@ -49,7 +53,8 @@ const CreateJournalForm = () => {
           autoComplete="off"
           placeholder="What's been on? ..."
         />
-        <Button className={styles.Submit} type="submit" text="Complete reflection" />
+        <Button className={styles.Button} type="button" text="Cancel" clickHandler={() => setShowingForm(false)} />
+        <Button className={styles.Button} type="submit" text="Complete reflection" />
       </form>
     </div>
   );
