@@ -13,7 +13,6 @@ export interface ErrorPayload {
 
 interface AuthState {
   data: AuthSchema | null;
-  isAuthenticated: boolean;
   isLoading: boolean;
   errors: Array<ErrorPayload> | null;
   didComplete: boolean;
@@ -21,7 +20,6 @@ interface AuthState {
 
 const initialState: AuthState = {
   data: null,
-  isAuthenticated: false,
   isLoading: true,
   errors: null,
   didComplete: false,
@@ -34,11 +32,9 @@ export const authSlice = createSlice({
     populate: (state, action: PayloadAction<object>) => {
       state.data = action.payload as AuthSchema;
       state.didComplete = false;
-      state.isAuthenticated = true;
     },
     invalidate: state => {
       state.data = null;
-      state.isAuthenticated = false;
       state.didComplete = false;
       localStorage.clear();
     },
@@ -54,7 +50,6 @@ export const authSlice = createSlice({
       const payload = action.payload as AuthSchema;
       state.data = payload;
       state.isLoading = false;
-      state.isAuthenticated = true;
       state.errors = null;
       state.didComplete = true;
       localStorage.setItem('token', JSON.stringify(payload));
@@ -62,7 +57,6 @@ export const authSlice = createSlice({
     fail: (state, action: PayloadAction<Array<ErrorPayload>>) => {
       state.errors = action.payload;
       state.isLoading = false;
-      state.isAuthenticated = false;
       state.didComplete = true;
       localStorage.clear();
     },
@@ -77,9 +71,7 @@ export const selectError = (state: RootState) => {
   return state.auth.errors && state.auth.errors[0];
 };
 export const selectIsLoading = (state: RootState) => state.auth.isLoading;
-export const selectIsAuthenticated = (state: RootState) => {
-  return state.auth.isAuthenticated;
-};
+
 export const selectDidComplete = (state: RootState) => state.auth.didComplete;
 
 export default authSlice.reducer;
