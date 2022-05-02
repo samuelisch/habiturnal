@@ -27,10 +27,10 @@ const ProtectedContainer = ({ children }: Props) => {
         try {
           const token = JSON.parse(tokenAuth);
           const username = JSON.parse(userAuth);
+          setToken(token);
           const user = await userCalls.getUserByUsername(username);
           if (fetching) {
             dispatch(populate(token));
-            setToken(token);
             setUser(user as UserSchema);
           }
         } catch (err) {
