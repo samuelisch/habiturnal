@@ -38,6 +38,8 @@ const ProtectedContainer = ({ children }: Props) => {
           dispatch(invalidate());
           navigate('/login');
         }
+      } else {
+        navigate('/login');
       }
     })();
 
