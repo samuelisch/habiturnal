@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import journalCalls, { JournalInputType, JournalType } from '../services/journals';
+import journalCalls, { JournalType } from '../services/journals';
 import { ErrorPayload } from './authSlice';
 import { store, RootState } from './store';
 
