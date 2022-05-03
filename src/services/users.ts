@@ -1,8 +1,6 @@
-import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
-import { DecodedTokenSchema } from '../Main/Login';
+import axios, { AxiosResponse } from 'axios';
 import { UserSchema } from '../reducers/usersSlice';
 import { UserType } from '../utils/types';
-import { token } from './login';
 
 const baseUrl = 'http://localhost:8000/api/users';
 
@@ -21,20 +19,10 @@ const createUser = async (userObj: UserType): Promise<AxiosResponse> => {
   return response.data;
 };
 
-const getJwtDetails = async (): Promise<AxiosResponse | DecodedTokenSchema> => {
-  const config: AxiosRequestConfig = {
-    headers: { Authorization: token },
-  };
-
-  const response = await axios.get(`${baseUrl}/jwt-details`, config);
-  return response.data
-}
-
 const userCalls = {
   getUsers,
   getUserById,
   createUser,
-  getJwtDetails,
 };
 
 export default userCalls;

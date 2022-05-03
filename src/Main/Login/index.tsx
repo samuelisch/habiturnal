@@ -1,11 +1,10 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import Button from '../../assets/Button';
 import loginCalls, { setToken, TokenSchema } from '../../services/login';
 import { useDispatch } from 'react-redux';
-import { fetch, success, fail, populate, invalidate } from '../../reducers/authSlice';
+import { fetch, success, fail } from '../../reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.scss';
-import userCalls from '../../services/users';
 
 export interface DecodedTokenSchema {
   token_type: string;
@@ -29,7 +28,7 @@ const Login = () => {
       const tokens = await loginCalls.loginUser(credentials);
       if (tokens) {
         dispatch(success(tokens));
-        const decodedToken = await userCalls.getJwtDetails()
+        const decodedToken = await loginCalls.getJwtDetails()
         localStorage.setItem('tokenDetails', JSON.stringify(decodedToken as DecodedTokenSchema));
         setToken(tokens as TokenSchema);
         navigate('/home');
@@ -43,16 +42,16 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Log in</h2>
-      <form onSubmit={loginUser}>
+    <div className={styles.Container}>
+      <h2 className={styles.Header}>Log in</h2>
+      <form onSubmit={loginUser} className={styles.Form}>
         <input
           aria-label="usernameInput"
           className={styles.Input}
           type="text"
           value={loginUsername}
           onChange={e => setLoginUsername(e.target.value)}
-          placeholder="username"
+          placeholder="Username"
         />
         <input
           aria-label="passwordInput"
@@ -60,11 +59,11 @@ const Login = () => {
           type="text"
           value={loginPassword}
           onChange={e => setLoginPassword(e.target.value)}
-          placeholder="password"
+          placeholder="Password"
         />
-        <Button className="loginSubmit" type="submit" text="Login user" />
+        <Button className={styles.Button} type="submit" text="Login user" />
       </form>
-      <span>
+      <span className={styles.Info}>
         Don't have an account?{' '}
         <span className={styles.Link} onClick={() => navigate('/signup')}>
           Sign up with us

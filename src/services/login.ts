@@ -1,5 +1,7 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { UserType } from '../utils/types';
+import { DecodedTokenSchema } from '../Main/Login';
+
 
 const baseUrl = 'http://localhost:8000/api/token/';
 
@@ -19,8 +21,18 @@ const loginUser = async (credentials: UserType): Promise<AxiosResponse | TokenSc
   return response.data;
 };
 
+const getJwtDetails = async (): Promise<AxiosResponse | DecodedTokenSchema> => {
+  const config: AxiosRequestConfig = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.get(`${baseUrl}jwt-details`, config);
+  return response.data
+}
+
 const loginCalls = {
   loginUser,
+  getJwtDetails
 };
 
 export default loginCalls;

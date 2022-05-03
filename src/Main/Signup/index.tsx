@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../assets/Button';
 import userCalls from '../../services/users';
 import styles from './Signup.module.scss';
+import ReactFlagsSelect from 'react-flags-select';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -25,6 +26,8 @@ const Signup = () => {
       setCreateUsername('');
       setCreatePassword('');
       setCreateLocation('');
+
+      navigate('/login');
     } catch (error: any) {
       if (error.response) {
         console.log(error.response.data);
@@ -33,33 +36,40 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h1>Sign up la</h1>
-      <form onSubmit={createNewUser}>
+    <div className={styles.Container}>
+      <h1 className={styles.Header}>Sign up</h1>
+      <form onSubmit={createNewUser} className={styles.Form}>
         <input
           aria-label="usernameInput"
+          className={styles.Input}
           type="text"
           value={createUsername}
           onChange={e => setCreateUsername(e.target.value)}
-          placeholder="username"
+          placeholder="Username"
         />
         <input
           aria-label="passwordInput"
+          className={styles.Input}
           type="text"
           value={createPassword}
           onChange={e => setCreatePassword(e.target.value)}
-          placeholder="password"
+          placeholder="Password"
         />
-        <input
-          aria-label="locationInput"
-          type="text"
-          value={createLocation}
-          onChange={e => setCreateLocation(e.target.value)}
-          placeholder="location"
+        <ReactFlagsSelect 
+          selected={createLocation}
+          className={styles.Country}
+          onSelect={(code: string) => setCreateLocation(code)}
+          showSelectedLabel={true}
+          showSecondarySelectedLabel={true}
+          placeholder='Select country ...'
+          searchable={true}
+          alignOptionsToRight={false}
+          fullWidth={false}
+          disabled={false}
         />
-        <Button className="signupSubmit" type="submit" text="Create user" />
+        <Button className={styles.Button} type="submit" text="Create user" />
       </form>
-      <span>Have an account? Don't create another. <span className={styles.Link} onClick={() => navigate('/login')}>Log in</span></span>
+      <span className={styles.Info}>Have an account? Don't create another. <span className={styles.Link} onClick={() => navigate('/login')}>Log in</span></span>
     </div>
   );
 };

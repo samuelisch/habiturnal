@@ -1,9 +1,45 @@
 @import '../../assets/styles/variables.scss';
 
+.Container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.Header {
+  font-size: 2.1rem;
+}
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .Input {
+  width: 70%;
+  max-width: 250px;
   border: none;
-  border-radius: $border-radius-default;
-  padding: 5px;
+  background-color: $color-shy-grey;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  margin: 10px 0;
+}
+
+.Button {
+  width: 70%;
+  max-width: 200px;
+  border: none;
+  border-radius: 15px;
+  padding: 8px 5px;
+  margin: 10px auto;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
+  transition: background-color .1s;
+
+  &:hover {
+    background-color: #f6f6f6;
+    cursor: pointer;
+  }
 }
 
 .Link {
@@ -13,4 +49,8 @@
     color: $color-active-dark;
     cursor: pointer;
   }
+}
+
+.Info {
+  margin-top: 10px;
 }
