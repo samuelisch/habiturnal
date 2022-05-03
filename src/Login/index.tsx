@@ -1,8 +1,8 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import Button from '../../assets/Button';
-import loginCalls, { setToken, TokenSchema } from '../../services/login';
+import Button from '../assets/Button';
+import loginCalls, { setToken, TokenSchema } from '../services/login';
 import { useDispatch } from 'react-redux';
-import { fetch, success, fail, populate, invalidate } from '../../reducers/authSlice';
+import { fetch, success, fail, populate, invalidate } from '../reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
