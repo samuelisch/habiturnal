@@ -4,6 +4,16 @@ import loginCalls, { setToken, TokenSchema } from '../services/login';
 import { useDispatch } from 'react-redux';
 import { fetch, success, fail, populate, invalidate } from '../reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
+import styles from './Login.module.scss';
+import userCalls from '../services/users';
+
+export interface DecodedTokenSchema {
+  token_type: string;
+  exp: number | string;
+  iat: number | string;
+  jti: string;
+  user_id: number | string;
+}
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -30,7 +40,8 @@ const Login = () => {
       const tokens = await loginCalls.loginUser(credentials);
       if (tokens) {
         dispatch(success(tokens));
-        localStorage.setItem('username', JSON.stringify(loginUsername));
+        const decodedToken = await userCalls.getJwtDetails()
+        localStorage.setItem('tokenDetails', JSON.stringify(decodedToken as DecodedTokenSchema));
         setToken(tokens as TokenSchema);
         navigate('/home');
       }
@@ -48,6 +59,7 @@ const Login = () => {
       <form onSubmit={loginUser}>
         <input
           aria-label="usernameInput"
+          className={styles.Input}
           type="text"
           value={loginUsername}
           onChange={e => setLoginUsername(e.target.value)}
@@ -55,6 +67,7 @@ const Login = () => {
         />
         <input
           aria-label="passwordInput"
+          className={styles.Input}
           type="text"
           value={loginPassword}
           onChange={e => setLoginPassword(e.target.value)}
@@ -62,6 +75,12 @@ const Login = () => {
         />
         <Button className="loginSubmit" type="submit" text="Login user" />
       </form>
+      <span>
+        Don't have an account?{' '}
+        <span className={styles.Link} onClick={() => navigate('/signup')}>
+          Sign up with us
+        </span>
+      </span>
     </>
   );
 };

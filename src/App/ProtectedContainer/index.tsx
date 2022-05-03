@@ -22,14 +22,19 @@ const ProtectedContainer = ({ children }: Props) => {
     let fetching = true;
     (async () => {
       const tokenAuth = localStorage.getItem('token');
-      const userAuth = localStorage.getItem('username');
-      if (tokenAuth && userAuth) {
+      const detailsAuth = localStorage.getItem('tokenDetails');
+      if (tokenAuth && detailsAuth) {
         try {
           const token = JSON.parse(tokenAuth);
-          const username = JSON.parse(userAuth);
-          setToken(token);
-          const user = await userCalls.getUserByUsername(username);
+          const tokenDetails = JSON.parse(detailsAuth);
+          if (Date.now() >= tokenDetails.exp * 1000) {
+            console.error('token expired');
+            dispatch(invalidate());
+            navigate('/login');
+          } 
+          const user = await userCalls.getUserById(tokenDetails.user_id);
           if (fetching) {
+            setToken(token);
             dispatch(populate(token));
             setUser(user as UserSchema);
           }
