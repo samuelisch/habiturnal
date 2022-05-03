@@ -1,0 +1,39 @@
+@import '../../assets/styles/variables.scss';
+
+.Container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-right: 1px solid red;
+  width: 60px;
+  position: fixed;
+  height: 100%;
+}
+
+.Icon {
+  width: 50px;
+  height: 50px;
+  margin: 15px 5px;
+  padding: 10px;
+  border-radius: 50%;
+  text-align: center;
+  transition: background-color .2s;
+
+  &:hover {
+    background-color: rgba(242, 235, 243, 0.8);
+    cursor: pointer;
+  }
+}
+
+.IconHome {
+  @extend .Icon;
+
+  &:hover {
+    background-color: $color-shy-grey;
+  }
+}
+
+.Bottom {
+  margin-bottom: 10px;
+}
