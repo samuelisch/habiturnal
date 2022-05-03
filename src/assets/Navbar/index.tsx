@@ -27,8 +27,8 @@ const Navbar = () => {
   }
 
   return (
-    <div className={styles.Container}>
-      <div className={styles.Top}>
+    <div className={styles.OuterContainer}>
+      <div className={styles.Container}>
         <div className={styles.IconHome} onClick={() => navigate('/home')}>
           <GiBookshelf size='25px' />
         </div>
@@ -38,8 +38,6 @@ const Navbar = () => {
         <div className={styles.Icon} onClick={() => navigate('/journals/create')}>
           <SiLivejournal size='25px' />
         </div>
-      </div>
-      <div className={styles.Bottom}>
         <div className={styles.Icon}>
           <FiSettings size='25px' />
         </div>

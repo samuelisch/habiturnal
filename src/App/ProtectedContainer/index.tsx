@@ -58,10 +58,10 @@ const ProtectedContainer = ({ children }: Props) => {
   return (
     <div>
       <UserContext.Provider value={user}>
-        <Navbar />
         <div className={styles.MainContainer}>
           {children}
         </div>
+        <Navbar />
       </UserContext.Provider>
     </div>
   );

@@ -1,14 +1,12 @@
-import { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../App/ProtectedContainer';
+import { useEffect } from 'react';
 import JournalsList from '../Journals/JournalsList';
 import { useAppDispatch } from '../reducers/hooks';
 import { fetchJournals } from '../reducers/journalsSlice';
 
+import styles from './Home.module.scss';
+
 const Home = () => {
-  const user = useContext(UserContext);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -17,10 +15,10 @@ const Home = () => {
   }, []);
 
   return (
-    <>
+    <div className={styles.Container}>
       {/* add tab here to see all or near with flag of location */}
       <JournalsList />
-    </>
+    </div>
   );
 };
 

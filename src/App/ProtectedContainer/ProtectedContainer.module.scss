@@ -1,3 +1,7 @@
 .MainContainer {
-  padding: 20px 20px 20px 70px;
+  padding: 20px;
+
+  @media (min-width: 780px) {
+    padding: 20px 20px 20px 10%;
+  }
 }
