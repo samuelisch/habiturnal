@@ -1,6 +1,7 @@
 @import './assets/styles/variables.scss';
 
 * {
+  
   font-size: 14px;
   font-family: Helvetica, sans-serif;
 
@@ -19,9 +20,6 @@
     &:hover {
       background: #999fa2;
     }
-  }
-  ::-webkit-scrollbar-track {
-    background: #fafafa;
   }
 }
 
