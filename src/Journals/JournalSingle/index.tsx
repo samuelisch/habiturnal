@@ -17,6 +17,7 @@ const JournalSingle = ({ journal }: Props) => {
       <h1>{journal.title}</h1>
       <p>{journal.content}</p>
       <div>{journal.owner}</div>
+      <span>{new Date(journal.created_date).getTime()}</span>
     </div>
   );
 };

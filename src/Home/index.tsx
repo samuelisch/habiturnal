@@ -25,7 +25,7 @@ const Home = () => {
 
   return (
     <div>
-      {user ? <h1> Welcome, {user.username}!</h1> : ''}
+      {user ? <h1> Welcome, <span onClick={() => navigate(`/user/${user.id}`)}>{user.username}!</span></h1> : ''}
       <Button className="logoutBtn" type="button" text="logout" clickHandler={logout} />
       <Button className="createJournal" type="button" text="create new" clickHandler={() => navigate('/journals/create')} />
       <JournalsList />
