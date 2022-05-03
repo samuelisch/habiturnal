@@ -29,7 +29,7 @@ const getSingleJournal = async (id: number | string): Promise<AxiosResponse | Jo
   return response.data
 }
 
-const createJournal = async (journalObj: JournalInputType): Promise<AxiosResponse> => {
+const createJournal = async (journalObj: JournalInputType): Promise<AxiosResponse | JournalType> => {
   const config: AxiosRequestConfig = {
     headers: { Authorization: token },
   };

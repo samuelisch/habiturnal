@@ -2,10 +2,13 @@ import React, { FormEvent, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../assets/Button';
 import { UserContext } from '../../App/ProtectedContainer';
-import journalCalls from '../../services/journals';
+import journalCalls, { JournalType } from '../../services/journals';
 import styles from './CreateJournalForm.module.scss';
+import { useAppDispatch } from '../../reducers/hooks';
+import { create } from '../../reducers/journalsSlice';
 
 const CreateJournalForm = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useContext(UserContext);
   const [title, setTitle] = useState<string>('');
@@ -21,8 +24,9 @@ const CreateJournalForm = () => {
         content,
         owner: user.username,
       };
-      const newJournal = await journalCalls.createJournal(journalObject);
-      console.log(newJournal);
+      const newJournal = await journalCalls.createJournal(journalObject) as JournalType;
+      dispatch(create(newJournal));
+      navigate(`/journals/view/${newJournal.id}`)
 
       setTitle('');
       setContent('');

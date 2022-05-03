@@ -38,11 +38,6 @@ export const fetchJournals = createAsyncThunk('journals/init', async (): Promise
   store.dispatch(init(data));
 })
 
-export const createJournal = createAsyncThunk('journals/create', async (newJournal: JournalInputType): Promise<void> => {
-  const data = await journalCalls.createJournal(newJournal);
-  store.dispatch(create(data));
-})
-
 export const getJournalsState = (state: RootState) => state.journals;
 
 export const selectAllJournals = (state: RootState) => state.journals.data;
