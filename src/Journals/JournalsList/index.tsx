@@ -7,7 +7,7 @@ const JournalsList = () => {
   const allJournals = useAppSelector(selectAllJournals);
 
   const sortedJournals = [...allJournals].sort((a: JournalType, b: JournalType) => {
-    return new Date(a['created_date']).getTime() - new Date(b['created_date']).getTime()
+    return new Date(b.created_date).getTime() - new Date(a.created_date).getTime()
   })
 
   const displayJournals = sortedJournals.map((journal: JournalType) => (
