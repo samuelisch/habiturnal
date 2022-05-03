@@ -38,7 +38,7 @@ const App = (): ReactElement | null => {
             <JournalDetailsView />
           </ProtectedContainer>
         } />
-        <Route path="*" element={<Navigate to="/home" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
