@@ -3,11 +3,12 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import Home from '../Home';
 
-import Login from '../User/Login';
-import Signup from '../User/Signup';
+import Login from '../Login';
+import Signup from '../Signup';
 import JournalDetailsView from '../Journals/JournalDetailsView';
 import ProtectedContainer from './ProtectedContainer';
 import CreateJournalForm from '../Journals/CreateJournalForm';
+import User from '../User';
 
 const App = (): ReactElement | null => {
   return (
@@ -18,6 +19,11 @@ const App = (): ReactElement | null => {
         <Route path="/home" element={
           <ProtectedContainer>
             <Home />
+          </ProtectedContainer>
+        } />
+        <Route path="/user/:id" element={
+          <ProtectedContainer>
+            <User />
           </ProtectedContainer>
         } />
         <Route path="/journals/create" element={
