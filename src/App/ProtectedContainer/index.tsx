@@ -1,10 +1,12 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../../assets/Navbar';
 import { invalidate, populate } from '../../reducers/authSlice';
 import { useAppDispatch } from '../../reducers/hooks';
 import { UserSchema } from '../../reducers/usersSlice';
 import { setToken } from '../../services/login';
 import userCalls from '../../services/users';
+import styles from './ProtectedContainer.module.scss';
 
 export const UserContext = createContext<UserSchema | null>(null);
 
@@ -56,8 +58,10 @@ const ProtectedContainer = ({ children }: Props) => {
   return (
     <div>
       <UserContext.Provider value={user}>
-        <h1>Navbar</h1>
-        {children}
+        <Navbar />
+        <div className={styles.MainContainer}>
+          {children}
+        </div>
       </UserContext.Provider>
     </div>
   );
