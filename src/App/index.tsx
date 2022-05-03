@@ -3,17 +3,19 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import Home from '../Home';
 
-import Login from '../Login';
-import Signup from '../Signup';
+import Login from '../Main/Login';
+import Signup from '../Main/Signup';
 import JournalDetailsView from '../Journals/JournalDetailsView';
 import ProtectedContainer from './ProtectedContainer';
 import CreateJournalForm from '../Journals/CreateJournalForm';
 import User from '../User';
+import Main from '../Main';
 
 const App = (): ReactElement | null => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={

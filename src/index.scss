@@ -1,5 +1,7 @@
+@import './assets/styles/variables.scss';
+
 * {
-  font-size: 10px;
+  font-size: 14px;
   font-family: Helvetica, sans-serif;
 
   &:focus {
@@ -27,7 +29,7 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #fafafa;
+  background: $color-shy-grey;
   color: #202020;
   overflow-y: auto;
   overflow-x: hidden;

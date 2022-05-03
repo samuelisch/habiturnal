@@ -1,0 +1,16 @@
+@import '../../assets/styles/variables.scss';
+
+.Input {
+  border: none;
+  border-radius: $border-radius-default;
+  padding: 5px;
+}
+
+.Link {
+  color: $color-blue;
+
+  &:hover {
+    color: $color-active-dark;
+    cursor: pointer;
+  }
+}

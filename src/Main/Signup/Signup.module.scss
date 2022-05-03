@@ -1,0 +1,10 @@
+@import '../../assets/styles/variables.scss';
+
+.Link {
+  color: $color-blue;
+
+  &:hover {
+    color: $color-active-dark;
+    cursor: pointer;
+  }
+}

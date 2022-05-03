@@ -1,8 +1,11 @@
 import React, { FormEvent, useState } from 'react';
-import Button from '../assets/Button';
-import userCalls from '../services/users';
+import { useNavigate } from 'react-router-dom';
+import Button from '../../assets/Button';
+import userCalls from '../../services/users';
+import styles from './Signup.module.scss';
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [createUsername, setCreateUsername] = useState<string>('');
   const [createPassword, setCreatePassword] = useState<string>('');
   const [createLocation, setCreateLocation] = useState<string>('');
@@ -30,7 +33,7 @@ const Signup = () => {
   };
 
   return (
-    <>
+    <div>
       <h1>Sign up la</h1>
       <form onSubmit={createNewUser}>
         <input
@@ -56,7 +59,8 @@ const Signup = () => {
         />
         <Button className="signupSubmit" type="submit" text="Create user" />
       </form>
-    </>
+      <span>Have an account? Don't create another. <span className={styles.Link} onClick={() => navigate('/login')}>Log in</span></span>
+    </div>
   );
 };
 

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
-import { DecodedTokenSchema } from '../Login';
+import { DecodedTokenSchema } from '../Main/Login';
 import { UserSchema } from '../reducers/usersSlice';
 import { UserType } from '../utils/types';
 import { token } from './login';
