@@ -5,6 +5,7 @@ import { FiSettings } from 'react-icons/fi';
 import { GiBookshelf } from 'react-icons/gi';
 import { CgProfile } from 'react-icons/cg';
 import { SiLivejournal } from 'react-icons/si';
+import { AiOutlineHome } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
 import { invalidate } from '../../reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
@@ -19,7 +20,7 @@ const Navbar = () => {
 
   const logout = () => {
     dispatch(invalidate());
-    navigate('/login');
+    navigate('/');
   };
 
   if (!user) {
@@ -30,7 +31,7 @@ const Navbar = () => {
     <div className={styles.OuterContainer}>
       <div className={styles.Container}>
         <div className={styles.IconHome} onClick={() => navigate('/home')}>
-          <GiBookshelf size='25px' />
+          <AiOutlineHome size='25px' />
         </div>
         <div className={styles.Icon} onClick={() => navigate(`/user/${user.id}`)}>
           <CgProfile size='25px' />
