@@ -24,12 +24,21 @@ const getJournals = async (): Promise<AxiosResponse | JournalType[]> => {
   return response.data;
 };
 
+const getJournalsByUserId = async (
+  userId: string | number
+): Promise<AxiosResponse | JournalType[]> => {
+  const response = await axios.get(`${baseUrl}/journal-list-user/${userId}`);
+  return response.data;
+};
+
 const getSingleJournal = async (id: number | string): Promise<AxiosResponse | JournalType> => {
   const response = await axios.get(`${baseUrl}/journal-detail/${id}`);
-  return response.data
-}
+  return response.data;
+};
 
-const createJournal = async (journalObj: JournalInputType): Promise<AxiosResponse | JournalType> => {
+const createJournal = async (
+  journalObj: JournalInputType
+): Promise<AxiosResponse | JournalType> => {
   const config: AxiosRequestConfig = {
     headers: { Authorization: token },
   };
@@ -40,6 +49,7 @@ const createJournal = async (journalObj: JournalInputType): Promise<AxiosRespons
 
 const journalCalls = {
   getJournals,
+  getJournalsByUserId,
   getSingleJournal,
   createJournal,
 };
