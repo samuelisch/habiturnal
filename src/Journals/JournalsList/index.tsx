@@ -21,7 +21,7 @@ const JournalsList = ({ filter, value }: Props) => {
     (async () => {
       dispatch(fetchJournals());
     })();
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (user && allJournals.length) {
