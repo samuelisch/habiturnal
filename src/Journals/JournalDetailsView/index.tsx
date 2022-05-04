@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
+import { UserContext } from "../../App/ProtectedContainer";
 import Loading from "../../assets/Loading";
 import journalCalls, { JournalType } from "../../services/journals";
+import styles from './JournalDetailsView.module.scss';
 
 const JournalDetailsView = () => {
   const { id } = useParams();
+  const user = useContext(UserContext);
   const [journal, setJournal] = useState<JournalType | null>(null)
 
   useEffect(() => {
     let fetching = true;
     (async () => {
-      if (id) {
+      if (id && user) {
         try {
           const singleJournal = await journalCalls.getSingleJournal(id);
           if (fetching) {
@@ -26,18 +29,18 @@ const JournalDetailsView = () => {
     return () => {
       fetching = false;
     }
-  }, [id])
+  }, [id, user])
 
   if (!journal) {
     return <Loading />;
   }
 
   return (
-    <div>
+    <div className={styles.Container}>
       {/* add date created, ability to save post, beautify styling */}
       <span>by: {journal.owner}</span>
-      <h1>{journal.title}</h1>
-      <p>{journal.content}</p>
+      <div>{journal.title}</div>
+      <div className={styles.Content}>{journal.content}</div>
     </div>
   )
 }
