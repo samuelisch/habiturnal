@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
-import { JournalType } from '../../services/journals';
+import journalCalls, { JournalType } from '../../services/journals';
 import { calcReadTime } from '../../utils/utilfunc';
 import styles from './JournalSingle.module.scss';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import TimeAgo from '../../assets/TimeAgo';
 import ReactCountryFlag from 'react-country-flag';
+import { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../../App/ProtectedContainer';
 
 interface Props {
   journal: JournalType;
@@ -12,6 +14,32 @@ interface Props {
 
 const JournalSingle = ({ journal }: Props) => {
   const navigate = useNavigate();
+  const user = useContext(UserContext)
+  const [saved, setSaved] = useState<boolean>(false);
+
+  useEffect(() => {
+
+  }, [])
+
+  const savePost = async () => {
+    if (user && journal) {
+      const likesObj = {
+        user: user.id,
+        journals: journal.id
+      }
+      
+      const like = await journalCalls.createJournalLike(likesObj);
+      console.log(like);
+      // dispatch add to journalLikeStore
+      setSaved(true);
+    }
+  }
+
+  const unSavePost = () => {
+    // add functionality to delete like based on id
+    // dispatch remove from journalLikeStore
+    setSaved(false);
+  }
 
   const openJournal = () => {
     navigate(`/journals/view/${journal.id}`);
@@ -47,7 +75,10 @@ const JournalSingle = ({ journal }: Props) => {
           <span className={styles.Divider}> - </span>
         </div>
         <div>
-          <FaRegBookmark className={styles.Like} size="15px" />
+          {saved 
+          ? <FaBookmark className={styles.Unlike} size="15px" onClick={unSavePost} />
+          : <FaRegBookmark className={styles.Like} size="15px" onClick={savePost} />
+          }
         </div>
       </div>
     </div>
