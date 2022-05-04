@@ -1,7 +1,6 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import journalCalls, { LikesType } from '../services/journals';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { LikesType } from '../services/journals';
 import { ErrorPayload } from './authSlice';
-import { store, RootState } from './store';
 
 interface JournalsLikesState {
   data: LikesType[];

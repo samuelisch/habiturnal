@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom"
 import Loading from "../../assets/Loading";
 import journalCalls, { JournalType } from "../../services/journals";
 
-
 const JournalDetailsView = () => {
   const { id } = useParams();
   const [journal, setJournal] = useState<JournalType | null>(null)
@@ -35,6 +34,7 @@ const JournalDetailsView = () => {
 
   return (
     <div>
+      {/* add date created, ability to save post, beautify styling */}
       <span>by: {journal.owner}</span>
       <h1>{journal.title}</h1>
       <p>{journal.content}</p>
