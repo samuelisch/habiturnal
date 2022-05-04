@@ -20,6 +20,12 @@ export interface JournalType {
   location: string;
 }
 
+export interface LikesType {
+  id: string | number;
+  user: string | number;
+  journals: string | number;
+}
+
 export interface LikesInputType {
   user: string | number;
   journals: string | number;
