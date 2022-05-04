@@ -1,43 +1,62 @@
-import { useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../../App/ProtectedContainer';
 import { useAppDispatch, useAppSelector } from '../../reducers/hooks';
 import { fetchJournals, selectAllJournals } from '../../reducers/journalsSlice';
-import { JournalType } from '../../services/journals';
+import journalCalls, { JournalType } from '../../services/journals';
 import JournalSingle from '../JournalSingle';
 import styles from './JournalsList.module.scss';
 
 interface Props {
   filter?: string;
+  value?: string | number;
 }
 
-const JournalsList = ({ filter }: Props) => {
+const JournalsList = ({ filter, value }: Props) => {
+  const user = useContext(UserContext);
   const dispatch = useAppDispatch();
+  const [journals, setJournals] = useState<JournalType[]>([]);
   const allJournals = useAppSelector(selectAllJournals);
 
   useEffect(() => {
     (async () => {
-      if (filter === 'user') {
-        
-      }
-      else if (filter === 'saved') {}
-      else if (filter === 'near') {}
-      else {
-        await dispatch(fetchJournals());
-    }})();
-  }, [filter, dispatch]);
+      dispatch(fetchJournals());
+    })();
+  }, []);
 
-  const sortedJournals = [...allJournals].sort((a: JournalType, b: JournalType) => {
-    return new Date(b.created_date).getTime() - new Date(a.created_date).getTime()
-  })
+  useEffect(() => {
+    if (user && allJournals.length) {
+      (async () => {
+        if (filter === 'user') {
+          if (value) {
+            const selectedJournals = allJournals.filter(
+              journal => journal.user.toString() === value.toString()
+            );
+            setJournals(selectedJournals);
+          }
+        } else if (filter === 'saved') {
+        } else if (filter === 'near') {
+          const selectedJournals = allJournals.filter(
+            journal => journal.location === user.location
+          );
+          setJournals(selectedJournals);
+        } else {
+          setJournals(allJournals);
+        }
+      })();
+    }
+  }, [filter, user, allJournals, value]);
+
+  const sortedJournals = [...journals].sort((a: JournalType, b: JournalType) => {
+    return new Date(b.created_date).getTime() - new Date(a.created_date).getTime();
+  });
 
   const displayJournals = sortedJournals.map((journal: JournalType) => (
     <JournalSingle key={journal.id} journal={journal} />
-  ))
+  ));
 
   return (
-    // TODO: TABS FOR ALL / NEAR YOU
     <div>
-      <h1>Journals List</h1>
-      { displayJournals }
+      {displayJournals}
       <div className={styles.End}>
         <span className={styles.EndText}>You've reached the end.</span>
       </div>

@@ -23,6 +23,7 @@ const CreateJournalForm = () => {
         title,
         content,
         owner: user.username,
+        location: user.location,
       };
       const newJournal = await journalCalls.createJournal(journalObject) as JournalType;
       dispatch(create(newJournal));

@@ -51,7 +51,8 @@ const User = () => {
         <p>Joined: {new Date(selectedUser.date_joined).getTime()}</p>
         <Button className="goBack" type="button" text="Back" clickHandler={() => navigate(-1)} />
       </div>
-      <JournalsList />
+      {/* // TODO: TABS FOR USER JOURNALS / SAVED JOURNALS - to change state and pass to journalsList */}
+      <JournalsList filter='user' value={id} />
     </div>
   );
 };
