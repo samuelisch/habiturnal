@@ -6,6 +6,7 @@ import { UserSchema } from '../reducers/usersSlice';
 import userCalls from '../services/users';
 import styles from './User.module.scss';
 import ReactCountryFlag from 'react-country-flag';
+import { BsCalendar3 } from 'react-icons/bs';
 import { format, parseISO } from 'date-fns';
 
 const User = () => {
@@ -61,11 +62,14 @@ const User = () => {
             countryCode={selectedUser.location}
             svg
             style={{
-              fontSize: '2rem'
+              fontSize: '2.3rem'
             }}
           />
         </div>
-        <div className={styles.Date}>Joined: {}</div>
+        <div className={styles.Date}>
+            <BsCalendar3 />
+            <span className={styles.DateText}>Joined {dateJoined}</span>
+        </div>
       </div>
       {/* // TODO: TABS FOR USER JOURNALS / SAVED JOURNALS - to change state and pass to journalsList */}
       <JournalsList filter='user' value={id} />
