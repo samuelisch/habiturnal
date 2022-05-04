@@ -39,6 +39,11 @@
   margin: 15px 0;
 }
 
+.Preview {
+  width: 100%;
+  word-wrap: break-word;
+}
+
 .ReadTime {
   @extend .Secondary;
 

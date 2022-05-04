@@ -17,6 +17,7 @@ export interface JournalType {
   user: string | number;
   owner: string;
   created_date: string | number | Date;
+  location: string;
 }
 
 const getJournals = async (): Promise<AxiosResponse | JournalType[]> => {
