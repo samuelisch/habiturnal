@@ -7,8 +7,8 @@ import JournalSingle from '../JournalSingle';
 import styles from './JournalsList.module.scss';
 
 interface Props {
-  filter?: string;
-  value?: string | number;
+  filter?: string | null;
+  value?: string | number | null;
 }
 
 const JournalsList = ({ filter, value }: Props) => {
@@ -34,9 +34,9 @@ const JournalsList = ({ filter, value }: Props) => {
             setJournals(selectedJournals);
           }
         } else if (filter === 'saved') {
-        } else if (filter === 'near') {
+        } else if (filter === 'nearby') {
           const selectedJournals = allJournals.filter(
-            journal => journal.location === user.location
+            journal => journal.location === value
           );
           setJournals(selectedJournals);
         } else {
