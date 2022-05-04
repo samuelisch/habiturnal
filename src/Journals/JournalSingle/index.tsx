@@ -7,6 +7,8 @@ import TimeAgo from '../../assets/TimeAgo';
 import ReactCountryFlag from 'react-country-flag';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App/ProtectedContainer';
+import { useDispatch } from 'react-redux';
+import { createLike } from '../../reducers/journalLikeSlice';
 
 interface Props {
   journal: JournalType;
@@ -14,12 +16,9 @@ interface Props {
 
 const JournalSingle = ({ journal }: Props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useContext(UserContext)
   const [saved, setSaved] = useState<boolean>(false);
-
-  useEffect(() => {
-
-  }, [])
 
   const savePost = async () => {
     if (user && journal) {
@@ -29,15 +28,13 @@ const JournalSingle = ({ journal }: Props) => {
       }
       
       const like = await journalCalls.createJournalLike(likesObj);
-      console.log(like);
-      // dispatch add to journalLikeStore
+      dispatch(createLike(like));
       setSaved(true);
     }
   }
 
-  const unSavePost = () => {
-    // add functionality to delete like based on id
-    // dispatch remove from journalLikeStore
+  const unSavePost = async () => {
+    // await journalCalls.deleteJournalLike()
     setSaved(false);
   }
 
