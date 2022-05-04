@@ -4,6 +4,7 @@ import { calcReadTime } from '../../utils/utilfunc';
 import styles from './JournalSingle.module.scss';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import TimeAgo from '../../assets/TimeAgo';
+import ReactCountryFlag from 'react-country-flag';
 
 interface Props {
   journal: JournalType;
@@ -26,6 +27,9 @@ const JournalSingle = ({ journal }: Props) => {
         <div>
           <span className={styles.Author}>{journal.owner}</span>
           <span className={styles.Divider}> - </span>
+          <span className={styles.Country}>
+            <ReactCountryFlag countryCode={journal.location} />
+          </span>
         </div>
         <div>
           <TimeAgo timestamp={new Date(journal.created_date).toISOString()} />
