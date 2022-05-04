@@ -21,19 +21,31 @@ export interface JournalType {
 }
 
 const getJournals = async (): Promise<AxiosResponse | JournalType[]> => {
-  const response = await axios.get(`${baseUrl}/journal-list/`);
+  const config: AxiosRequestConfig = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.get(`${baseUrl}/journal-list/`, config);
   return response.data;
 };
 
 const getJournalsByUserId = async (
   userId: string | number
 ): Promise<AxiosResponse | JournalType[]> => {
-  const response = await axios.get(`${baseUrl}/journal-list-user/${userId}`);
+  const config: AxiosRequestConfig = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.get(`${baseUrl}/journal-list-user/${userId}`, config);
   return response.data;
 };
 
 const getSingleJournal = async (id: number | string): Promise<AxiosResponse | JournalType> => {
-  const response = await axios.get(`${baseUrl}/journal-detail/${id}`);
+  const config: AxiosRequestConfig = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.get(`${baseUrl}/journal-detail/${id}`, config);
   return response.data;
 };
 
