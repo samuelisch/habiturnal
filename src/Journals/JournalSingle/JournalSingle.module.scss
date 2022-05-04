@@ -58,6 +58,14 @@
   justify-content: space-between;
 }
 
+.Unlike {
+  color: $label-red;
+  
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .Like {
   transition: color .1s;
 
