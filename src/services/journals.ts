@@ -20,6 +20,11 @@ export interface JournalType {
   location: string;
 }
 
+export interface LikesInputType {
+  user: string | number;
+  journals: string | number;
+}
+
 const getJournals = async (): Promise<AxiosResponse | JournalType[]> => {
   const config: AxiosRequestConfig = {
     headers: { Authorization: token },
@@ -60,11 +65,41 @@ const createJournal = async (
   return response.data;
 };
 
+const getJournalLikesByUserId = async (userId: string | number): Promise<AxiosResponse> => {
+  const config: AxiosRequestConfig = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.get(`${baseUrl}/likes-list-user/${userId}`, config);
+  return response.data;
+}
+
+const createJournalLike = async (likesObj: LikesInputType): Promise<AxiosResponse> => {
+  const config: AxiosRequestConfig = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.post(`${baseUrl}/likes-create/`, likesObj, config);
+  return response.data;
+}
+
+const deleteJournalLike = async (id: string | number): Promise<AxiosResponse> => {
+  const config: AxiosRequestConfig = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.delete(`${baseUrl}/likes-delete/${id}`, config);
+  return response.data;
+}
+
 const journalCalls = {
   getJournals,
   getJournalsByUserId,
   getSingleJournal,
   createJournal,
+  getJournalLikesByUserId,
+  createJournalLike,
+  deleteJournalLike,
 };
 
 export default journalCalls;
