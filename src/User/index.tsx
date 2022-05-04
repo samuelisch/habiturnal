@@ -7,7 +7,7 @@ import userCalls from '../services/users';
 import styles from './User.module.scss';
 import ReactCountryFlag from 'react-country-flag';
 import { BsCalendar3 } from 'react-icons/bs';
-import { format, parseISO } from 'date-fns';
+import { formatDate } from '../utils/utilfunc';
 
 const User = () => {
   const { id } = useParams();
@@ -39,9 +39,8 @@ const User = () => {
 
   useEffect(() => {
     if (selectedUser) {
-      const date = parseISO(selectedUser.date_joined)
-      const formattedJoinedDate = format(date, 'MMMM R')
-      setDateJoined(formattedJoinedDate);
+      const formattedDate = formatDate(selectedUser.date_joined);
+      setDateJoined(formattedDate);
     }
   }, [selectedUser])
 

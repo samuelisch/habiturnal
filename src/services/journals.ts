@@ -16,7 +16,7 @@ export interface JournalType {
   content: string;
   user: string | number;
   owner: string;
-  created_date: string | number | Date;
+  created_date: string;
   location: string;
 }
 
