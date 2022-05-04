@@ -22,7 +22,7 @@ const JournalSingle = ({ journal }: Props) => {
 
   return (
     <div className={styles.Container}>
-      <div className={styles.Meta} onClick={() => navigate('')}>
+      <div className={styles.Meta} onClick={() => navigate(`/user/${journal.user}`)}>
         <div>
           <span className={styles.Author}>{journal.owner}</span>
           <span className={styles.Divider}> - </span>
