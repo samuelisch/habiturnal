@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import Button from '../../assets/Button';
 import loginCalls, { setToken } from '../../services/login';
 import { useDispatch } from 'react-redux';
@@ -6,15 +6,29 @@ import { fetch, success, fail } from '../../reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.scss';
 import { DecodedTokenSchema, TokenSchema } from '../../utils/types';
+import { NegativeToast, PositiveToast } from '../../assets/Toast';
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginUsername, setLoginUsername] = useState<string>('');
   const [loginPassword, setLoginPassword] = useState<string>('');
+  const [isEmpty, setIsEmpty] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (!loginUsername.length || !loginPassword.length) {
+      setIsEmpty(true);
+    } else {
+      setIsEmpty(false);
+    }
+  }, [loginUsername, loginPassword]);
 
   const loginUser = async (e: FormEvent) => {
     e.preventDefault();
+    if (isEmpty) {
+      NegativeToast('A required field is empty!');
+      return;
+    }
     const credentials = { username: loginUsername, password: loginPassword };
     dispatch(fetch());
     try {
@@ -24,11 +38,13 @@ const Login = () => {
         const decodedToken = await loginCalls.getJwtDetails();
         localStorage.setItem('tokenDetails', JSON.stringify(decodedToken as DecodedTokenSchema));
         setToken(tokens as TokenSchema);
+        PositiveToast('Successfully logged in');
         navigate('/home');
       }
     } catch (error: any) {
       if (error.response) {
         console.log(error.response.data);
+        NegativeToast(error.response.data.detail);
       }
       dispatch(fail(error.response));
     }
