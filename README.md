@@ -1,46 +1,34 @@
-# Getting Started with Create React App
+# Reflect
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Full stack application using React-Typescript with Django-REST-framework and PostgreSQL.
 
-## Available Scripts
+## Access and Deployment
 
-In the project directory, you can run:
+To be updated
 
-### `yarn start`
+### Motivation
+This project is a experiment into using Django as a backend framework. I specifically used the django-rest-frameowrk, and manipulated my database with it. Another motivation for this project was to be more comfortable in using TypeScript, and the proper implementation of typing in React.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Features / Technologies used
+#### Frontend:
+- React w Redux Toolkit
+- TypeScript
+- SASS (modules.scss)
+- React-Router v6
+- axios
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### Backend:
+- Django w django-rest-framework
+- Django simpleJWT
+- PostgreSQL
 
-### `yarn test`
+### Blockers and Future implementations
+#### Blockers
+- Time - There were far too many features to be implemented within the time I set for myself
+- Django - a particular pain point as I am unfamiliar with Python and the overall Django framework, I am also currently still exploring the fundamentals of relational databases.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Future implementations
+- I plan to add form validations for the project - it would be quite unsafe to deploy otherwise.
+- Styling for bigger screens / desktops
+- Addition of a search bar to filter journals on the right side of the application, to be shown only when the window is expanded
+- Settings - user settings components, that enables users to change their usernames and passwords
