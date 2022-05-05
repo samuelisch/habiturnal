@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { JournalType, LikesType } from '../services/journals';
+import { JournalType } from '../services/journals';
 import { ErrorPayload } from './authSlice';
-import { store, RootState } from './store';
+import { RootState } from './store';
 
 interface JournalsLikesState {
   data: JournalType[];
