@@ -55,6 +55,14 @@ const JournalsList = ({ filter, value }: Props) => {
     <JournalSingle key={journal.id} journal={journal} />
   ));
 
+  if (!displayJournals.length) {
+    return (
+      <div className={styles.End}>
+        <span className={styles.EndText}>There's a whole lotta nothing here.</span>
+      </div>
+    )
+  }
+
   return (
     <div className={styles.Container}>
       {displayJournals}

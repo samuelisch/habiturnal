@@ -20,6 +20,10 @@
       background: #999fa2;
     }
   }
+
+  @media (min-width: 800px) {
+    font-size: 16px;
+  }
 }
 
 body {
