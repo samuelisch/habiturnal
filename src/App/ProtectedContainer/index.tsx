@@ -70,6 +70,7 @@ const ProtectedContainer = ({ children }: Props) => {
       <UserContext.Provider value={user}>
         <div className={styles.MainContainer}>{children}</div>
         <Navbar />
+        
       </UserContext.Provider>
     </div>
   );
