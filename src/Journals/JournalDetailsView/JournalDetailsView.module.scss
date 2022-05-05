@@ -1,5 +1,52 @@
 @import '../../assets/styles/variables.scss';
 
+.Container {
+  border: 1px solid rgba(128, 128, 128, 0.7);
+  box-shadow: $box-shadow-card;
+  border-radius: $border-radius-default;
+  padding: 15px;
+}
+
+.HeaderContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Author {
+  margin: 10px 0;
+  font-size: 1.2rem;
+}
+
+.TimeDate {
+  color: $color-dark-grey;
+}
+
+.Title {
+  margin: 20px 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+}
+
 .Content {
   word-wrap: break-word;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.Unlike {
+  color: $label-red;
+  
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.Like {
+  transition: color .1s;
+
+  &:hover {
+    color: $label-red;
+    cursor: pointer;
+  }
 }
