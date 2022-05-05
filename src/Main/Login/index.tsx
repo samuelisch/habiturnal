@@ -56,7 +56,7 @@ const Login = () => {
         <input
           aria-label="passwordInput"
           className={styles.Input}
-          type="text"
+          type="password"
           value={loginPassword}
           onChange={e => setLoginPassword(e.target.value)}
           placeholder="Password"

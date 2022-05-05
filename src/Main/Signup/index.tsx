@@ -53,7 +53,7 @@ const Signup = () => {
         <input
           aria-label="passwordInput"
           className={styles.Input}
-          type="text"
+          type="password"
           value={createPassword}
           onChange={e => setCreatePassword(e.target.value)}
           placeholder="Password"
