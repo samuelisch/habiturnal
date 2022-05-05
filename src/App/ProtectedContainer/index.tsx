@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../../assets/Navbar';
 import { invalidate, populate } from '../../reducers/authSlice';
 import { useAppDispatch } from '../../reducers/hooks';
+import { initLikes } from '../../reducers/journalLikeSlice';
 import { UserSchema } from '../../reducers/usersSlice';
+import journalCalls from '../../services/journals';
 import { setToken } from '../../services/login';
 import userCalls from '../../services/users';
 import styles from './ProtectedContainer.module.scss';
@@ -19,7 +21,6 @@ const ProtectedContainer = ({ children }: Props) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<UserSchema | null>(null);
 
-
   useEffect(() => {
     let fetching = true;
     (async () => {
@@ -33,7 +34,7 @@ const ProtectedContainer = ({ children }: Props) => {
             console.error('token expired');
             dispatch(invalidate());
             navigate('/login');
-          } 
+          }
           const user = await userCalls.getUserById(tokenDetails.user_id);
           if (fetching) {
             setToken(token);
@@ -55,12 +56,19 @@ const ProtectedContainer = ({ children }: Props) => {
     };
   }, [dispatch, navigate]);
 
+  useEffect(() => {
+    (async () => {
+      if (user) {
+        const likedJournals = await journalCalls.getJournalLikesByUserId(user.id);
+        dispatch(initLikes(likedJournals))
+      }
+    })();
+  }, [user, dispatch]);
+
   return (
     <div>
       <UserContext.Provider value={user}>
-        <div className={styles.MainContainer}>
-          {children}
-        </div>
+        <div className={styles.MainContainer}>{children}</div>
         <Navbar />
       </UserContext.Provider>
     </div>

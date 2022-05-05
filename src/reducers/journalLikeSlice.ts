@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { LikesType } from '../services/journals';
+import { JournalType, LikesType } from '../services/journals';
 import { ErrorPayload } from './authSlice';
+import { store, RootState } from './store';
 
 interface JournalsLikesState {
-  data: LikesType[];
+  data: JournalType[];
   isLoading: boolean;
   errors: Array<ErrorPayload> | null;
 }
@@ -19,21 +20,23 @@ export const journalLikeSlice = createSlice({
   initialState,
   reducers: {
     initLikes: (state, action: PayloadAction<object>) => {
-      state.data = action.payload as LikesType[];
+      state.data = action.payload as JournalType[];
       state.isLoading = false;
     },
     createLike: (state, action: PayloadAction<object>) => {
-      state.data.push(action.payload as LikesType);
+      state.data.push(action.payload as JournalType);
       state.isLoading = false;
     },
     removeLike: (state, action: PayloadAction<object>) => {
-      const { id } = action.payload as LikesType;
-      state.data = state.data.filter(like => like.id !== id);
+      const { id } = action.payload as JournalType;
+      state.data = state.data.filter(data => data.id !== id);
       state.isLoading = false;
     },
   }
 })
 
 export const { initLikes, createLike, removeLike } = journalLikeSlice.actions;
+
+export const selectAllJournalLikes = (state: RootState) => state.journalLikes.data;
 
 export default journalLikeSlice.reducer;

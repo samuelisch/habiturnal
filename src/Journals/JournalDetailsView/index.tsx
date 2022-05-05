@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom"
 import { UserContext } from "../../App/ProtectedContainer";
 import Loading from "../../assets/Loading";
-import { createLike } from "../../reducers/journalLikeSlice";
+import { useAppSelector } from "../../reducers/hooks";
+import { createLike, removeLike, selectAllJournalLikes } from "../../reducers/journalLikeSlice";
 import journalCalls, { JournalType } from "../../services/journals";
 import { calcReadTime, formatDate } from "../../utils/utilfunc";
 import styles from './JournalDetailsView.module.scss';
@@ -15,6 +16,7 @@ const JournalDetailsView = () => {
   const user = useContext(UserContext);
   const [journal, setJournal] = useState<JournalType | null>(null)
   const [saved, setSaved] = useState<boolean>(false);
+  const likedJournals = useAppSelector(selectAllJournalLikes);
 
   useEffect(() => {
     let fetching = true;
@@ -23,7 +25,6 @@ const JournalDetailsView = () => {
         try {
           const singleJournal = await journalCalls.getSingleJournal(id);
           if (fetching) {
-            console.log(singleJournal)
             setJournal(singleJournal as JournalType);
           }
         } catch (error) {
@@ -37,6 +38,18 @@ const JournalDetailsView = () => {
     }
   }, [id, user])
 
+  useEffect(() => {
+    if (likedJournals && journal) {
+      console.log(likedJournals);
+      const response = likedJournals.filter(likedJournal => likedJournal.id === journal.id);
+      if (response.length) {
+        setSaved(true);
+      } else {
+        setSaved(false);
+      }
+    }
+  }, [likedJournals, journal])
+
   const savePost = async () => {
     if (user && journal) {
       const likesObj = {
@@ -44,8 +57,8 @@ const JournalDetailsView = () => {
         journals: journal.id
       }
       
-      const like = await journalCalls.createJournalLike(likesObj);
-      dispatch(createLike(like));
+      await journalCalls.createJournalLike(likesObj);
+      dispatch(createLike(journal));
       setSaved(true);
     }
   }
@@ -53,10 +66,10 @@ const JournalDetailsView = () => {
   const unSavePost = async () => {
     if (journal && user) {
       await journalCalls.deleteJournalLike(journal.id, user.id)
+      dispatch(removeLike(journal))
       setSaved(false);
     }
   }
-
 
   const formattedDate = () => {
     if (journal) {

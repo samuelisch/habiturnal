@@ -8,7 +8,8 @@ import ReactCountryFlag from 'react-country-flag';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App/ProtectedContainer';
 import { useDispatch } from 'react-redux';
-import { createLike } from '../../reducers/journalLikeSlice';
+import { createLike, removeLike, selectAllJournalLikes } from '../../reducers/journalLikeSlice';
+import { useAppSelector } from '../../reducers/hooks';
 
 interface Props {
   journal: JournalType;
@@ -19,6 +20,18 @@ const JournalSingle = ({ journal }: Props) => {
   const dispatch = useDispatch();
   const user = useContext(UserContext)
   const [saved, setSaved] = useState<boolean>(false);
+  const likedJournals = useAppSelector(selectAllJournalLikes);
+
+  useEffect(() => {
+    if (likedJournals && journal) {
+      const response = likedJournals.filter(likedJournal => likedJournal.id === journal.id);
+      if (response.length) {
+        setSaved(true);
+      } else {
+        setSaved(false);
+      }
+    }
+  }, [likedJournals, journal])
 
   const savePost = async () => {
     if (user && journal) {
@@ -27,8 +40,8 @@ const JournalSingle = ({ journal }: Props) => {
         journals: journal.id
       }
       
-      const like = await journalCalls.createJournalLike(likesObj);
-      dispatch(createLike(like));
+      await journalCalls.createJournalLike(likesObj);
+      dispatch(createLike(journal));
       setSaved(true);
     }
   }
@@ -36,6 +49,7 @@ const JournalSingle = ({ journal }: Props) => {
   const unSavePost = async () => {
     if (journal && user) {
       await journalCalls.deleteJournalLike(journal.id, user.id)
+      dispatch(removeLike(journal))
       setSaved(false);
     }
   }

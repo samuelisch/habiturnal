@@ -76,7 +76,7 @@ const getJournalLikesByUserId = async (userId: string | number): Promise<AxiosRe
     headers: { Authorization: token },
   };
 
-  const response = await axios.get(`${baseUrl}/likes-list-user/${userId}`, config);
+  const response = await axios.get(`${baseUrl}/journal-list-user-likes/${userId}`, config);
   return response.data;
 }
 
