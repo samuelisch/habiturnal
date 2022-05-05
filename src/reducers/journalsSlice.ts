@@ -28,10 +28,19 @@ export const journalsSlice = createSlice({
       state.data.push(action.payload as JournalType);
       state.isLoading = false;
     },
+    update: (state, action: PayloadAction<object>) => {
+      const { id } = action.payload as JournalType
+      state.data = state.data.map(journal => journal.id !== id ? journal : action.payload as JournalType)
+      state.isLoading = false;
+    },
+    remove: (state, action: PayloadAction<string | number>) => {
+      state.data = state.data.filter(journal => journal.id !== action.payload);
+      state.isLoading = false;
+    },
   },
 })
 
-export const { init, create } = journalsSlice.actions;
+export const { init, create, update, remove } = journalsSlice.actions;
 
 export const fetchJournals = createAsyncThunk('journals/init', async (): Promise<void> => {
   const data = await journalCalls.getJournals();
@@ -41,10 +50,5 @@ export const fetchJournals = createAsyncThunk('journals/init', async (): Promise
 export const getJournalsState = (state: RootState) => state.journals;
 
 export const selectAllJournals = (state: RootState) => state.journals.data;
-
-export const selectJournalById = (state: RootState, journalId: string | number) => {
-  const journal = state.journals.data.find(journal => journal.id === journalId);
-  return journal
-};
 
 export default journalsSlice.reducer;
