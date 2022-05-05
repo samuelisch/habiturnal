@@ -8,6 +8,7 @@ import { useAppDispatch } from '../../reducers/hooks';
 import { create } from '../../reducers/journalsSlice';
 import { ImCross } from 'react-icons/im';
 import { JournalType } from '../../utils/types';
+import { NegativeToast, PositiveToast } from '../../assets/Toast';
 
 const CreateJournalForm = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +20,14 @@ const CreateJournalForm = () => {
 
   const submitJournal = async (e: FormEvent) => {
     e.preventDefault();
-    if (!user) return; // something's really wrong if this happens
+    if (!user) {
+      NegativeToast('Something went horribly wrong. please let Sam know.');
+      return;
+    }
+    if (empty) {
+      NegativeToast('A field has not been filled up!');
+      return;
+    }
     try {
       const journalObject = {
         user: user.id,
@@ -30,10 +38,10 @@ const CreateJournalForm = () => {
       };
       const newJournal = (await journalCalls.createJournal(journalObject)) as JournalType;
       dispatch(create(newJournal));
-      navigate(`/journals/view/${newJournal.id}`);
-
       setTitle('');
       setContent('');
+      PositiveToast('Successfully published journal')
+      navigate(`/journals/view/${newJournal.id}`);
     } catch (error: any) {
       if (error.response) {
         console.log(error.response.data);
@@ -68,7 +76,6 @@ const CreateJournalForm = () => {
           className={styles.Button}
           type="button"
           text="Publish"
-          disabled={empty}
           clickHandler={submitJournal}
         />
       </div>
