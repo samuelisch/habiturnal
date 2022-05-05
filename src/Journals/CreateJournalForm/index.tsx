@@ -48,6 +48,12 @@ const CreateJournalForm = () => {
     }
   }, [title, content]);
 
+  const handleInputChange = (e: React.FormEvent) => {
+    const textbox = e.target as HTMLTextAreaElement
+    textbox.style.height = '0';
+    textbox.style.height = textbox.scrollHeight + "px"
+  }
+
   if (!user) {
     return null;
   }
@@ -79,6 +85,7 @@ const CreateJournalForm = () => {
           <textarea
             className={styles.ContentInput}
             value={content}
+            onInput={e => handleInputChange(e)}
             onChange={e => setContent(e.target.value)}
             autoComplete="off"
             placeholder="What's been on? ..."
