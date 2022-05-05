@@ -11,6 +11,7 @@ import { calcReadTime, formatDate } from "../../utils/utilfunc";
 import styles from './JournalDetailsView.module.scss';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { AiOutlineEdit } from 'react-icons/ai';
+import { remove } from "../../reducers/journalsSlice";
 
 const JournalDetailsView = () => {
   const { id } = useParams();
@@ -86,12 +87,12 @@ const JournalDetailsView = () => {
 
   const deleteJournal = async () => {
     await journalCalls.deleteJournal(journal.id);
+    dispatch(remove(journal.id));
     navigate('/home')
   }
 
   const editJournal = () => {
-    console.log('editing journal...')
-    // OPEN JOURNAL FORM TO EDIT JOURNAL DETAILS
+    navigate(`/journals/edit/${journal.id}`)
   }
 
   return (
