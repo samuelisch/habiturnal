@@ -16,6 +16,15 @@
   }
 }
 
+.AuthorContainer {
+  border-bottom: 1px solid transparent;
+  transition: border-bottom .1s;
+
+  &:hover {
+    border-bottom: 1px solid $color-dark-grey;
+  }
+}
+
 .Author {
   font-size: 1.1rem;
 }
@@ -60,7 +69,7 @@
 
 .Unlike {
   color: $label-red;
-  
+
   &:hover {
     cursor: pointer;
   }

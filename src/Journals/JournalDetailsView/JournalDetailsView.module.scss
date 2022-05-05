@@ -65,6 +65,7 @@
   background: inherit;
   border: none;
   border-bottom: 1px solid transparent;
+  transition: border-bottom .1s, color .1s;
 
   &:hover {
     cursor: pointer;
