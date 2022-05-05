@@ -10,6 +10,7 @@ import ProtectedContainer from './ProtectedContainer';
 import CreateJournalForm from '../Journals/CreateJournalForm';
 import User from '../User';
 import Main from '../Main';
+import EditJournalForm from '../Journals/EditJournalForm';
 
 const App = (): ReactElement | null => {
   return (
@@ -33,6 +34,12 @@ const App = (): ReactElement | null => {
             <CreateJournalForm />
           </ProtectedContainer>
         } />
+        <Route path="/journals/edit/:id" element={
+          <ProtectedContainer>
+            <EditJournalForm />
+          </ProtectedContainer>
+        }
+        />
         <Route path="/journals/view/:id" element={
           <ProtectedContainer>
             <JournalDetailsView />
