@@ -57,7 +57,7 @@ const JournalsList = ({ filter, value }: Props) => {
   ));
 
   return (
-    <div>
+    <div className={styles.Container}>
       {displayJournals}
       <div className={styles.End}>
         <span className={styles.EndText}>You've reached the end.</span>
