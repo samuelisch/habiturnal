@@ -71,7 +71,16 @@ const createJournal = async (
   return response.data;
 };
 
-const getJournalLikesByUserId = async (userId: string | number): Promise<AxiosResponse> => {
+const deleteJournal = async (journalId: string | number): Promise<AxiosResponse> => {
+  const config: AxiosRequestConfig = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.post(`${baseUrl}/journal-delete/${journalId}`, config);
+  return response.data;
+}
+
+const getJournalLikesByUserId = async (userId: string | number): Promise<AxiosResponse | JournalType[]> => {
   const config: AxiosRequestConfig = {
     headers: { Authorization: token },
   };
@@ -103,6 +112,7 @@ const journalCalls = {
   getJournalsByUserId,
   getSingleJournal,
   createJournal,
+  deleteJournal,
   getJournalLikesByUserId,
   createJournalLike,
   deleteJournalLike,
