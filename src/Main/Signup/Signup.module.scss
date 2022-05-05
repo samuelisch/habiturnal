@@ -44,7 +44,7 @@
   background-color: #6b79f4;
   margin: 10px 0;
   box-shadow: 0 1px 1px 1px rgba(46, 0, 55, 0.08);
-  transition: background-color .1s;
+  transition: background-color 0.1s;
 
   &:hover {
     background-color: $label-purple;

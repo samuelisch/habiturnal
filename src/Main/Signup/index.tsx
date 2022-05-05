@@ -23,7 +23,7 @@ const Signup = () => {
     };
     try {
       const createdUser = await userCalls.createUser(newUser);
-      dispatch(create(createdUser))
+      dispatch(create(createdUser));
 
       // reset form
       setCreateUsername('');
@@ -58,13 +58,13 @@ const Signup = () => {
           onChange={e => setCreatePassword(e.target.value)}
           placeholder="Password"
         />
-        <ReactFlagsSelect 
+        <ReactFlagsSelect
           selected={createLocation}
           className={styles.Country}
           onSelect={(code: string) => setCreateLocation(code)}
           showSelectedLabel={true}
           showSecondarySelectedLabel={true}
-          placeholder='Select country ...'
+          placeholder="Select country ..."
           searchable={true}
           alignOptionsToRight={false}
           fullWidth={false}
@@ -72,7 +72,12 @@ const Signup = () => {
         />
         <Button className={styles.Button} type="submit" text="Create user" />
       </form>
-      <span className={styles.Info}>Have an account? Don't create another. <span className={styles.Link} onClick={() => navigate('/login')}>Log in</span></span>
+      <span className={styles.Info}>
+        Have an account? Don't create another.{' '}
+        <span className={styles.Link} onClick={() => navigate('/login')}>
+          Log in
+        </span>
+      </span>
     </div>
   );
 };

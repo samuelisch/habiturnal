@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from '../assets/Loading';
 import JournalsList from '../Journals/JournalsList';
-import { UserSchema } from '../reducers/usersSlice';
 import userCalls from '../services/users';
 import styles from './User.module.scss';
 import ReactCountryFlag from 'react-country-flag';
 import { BsCalendar3 } from 'react-icons/bs';
 import { formatDate } from '../utils/utilfunc';
 import { UserContext } from '../App/ProtectedContainer';
+import { UserSchema } from '../utils/types';
 
 const User = () => {
   const { id } = useParams();

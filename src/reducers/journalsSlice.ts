@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import journalCalls, { JournalType } from '../services/journals';
-import { ErrorPayload } from './authSlice';
+import journalCalls from '../services/journals';
+import { ErrorPayload, JournalType } from '../utils/types';
 import { store, RootState } from './store';
-
 
 interface JournalsState {
   data: JournalType[];
@@ -29,8 +28,10 @@ export const journalsSlice = createSlice({
       state.isLoading = false;
     },
     update: (state, action: PayloadAction<object>) => {
-      const { id } = action.payload as JournalType
-      state.data = state.data.map(journal => journal.id !== id ? journal : action.payload as JournalType)
+      const { id } = action.payload as JournalType;
+      state.data = state.data.map(journal =>
+        journal.id !== id ? journal : (action.payload as JournalType)
+      );
       state.isLoading = false;
     },
     remove: (state, action: PayloadAction<string | number>) => {
@@ -38,14 +39,14 @@ export const journalsSlice = createSlice({
       state.isLoading = false;
     },
   },
-})
+});
 
 export const { init, create, update, remove } = journalsSlice.actions;
 
 export const fetchJournals = createAsyncThunk('journals/init', async (): Promise<void> => {
   const data = await journalCalls.getJournals();
   store.dispatch(init(data));
-})
+});
 
 export const getJournalsState = (state: RootState) => state.journals;
 

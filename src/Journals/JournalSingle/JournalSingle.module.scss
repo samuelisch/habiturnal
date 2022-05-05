@@ -18,7 +18,7 @@
 
 .AuthorContainer {
   border-bottom: 1px solid transparent;
-  transition: border-bottom .1s;
+  transition: border-bottom 0.1s;
 
   &:hover {
     border-bottom: 1px solid $color-dark-grey;
@@ -76,7 +76,7 @@
 }
 
 .Like {
-  transition: color .1s;
+  transition: color 0.1s;
 
   &:hover {
     color: $label-red;

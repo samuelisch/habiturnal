@@ -16,7 +16,7 @@ const Home = () => {
     if (selection === 'all') {
       setNearbyTabName(styles.Tab);
       setAllTabClassName(styles.TabSelected);
-      setTabFilter(null)
+      setTabFilter(null);
       setFilterValue(null);
     } else {
       setAllTabClassName(styles.Tab);
@@ -26,7 +26,7 @@ const Home = () => {
         setFilterValue(user.location);
       }
     }
-  }
+  };
 
   if (!user) {
     return null;
@@ -35,12 +35,12 @@ const Home = () => {
   return (
     <div className={styles.Container}>
       <div className={styles.TabContainer}>
-        <div className={allTabClassName} onClick={() => selectTab('all')}>All</div>
+        <div className={allTabClassName} onClick={() => selectTab('all')}>
+          All
+        </div>
         <div className={nearbyTabClassName} onClick={() => selectTab('nearby')}>
-          <span className={styles.Nearby}>Nearby{' '}</span>
-          <ReactCountryFlag 
-            countryCode={user.location}
-          />
+          <span className={styles.Nearby}>Nearby </span>
+          <ReactCountryFlag countryCode={user.location} />
         </div>
       </div>
       <JournalsList filter={tabFilter} value={filterValue} />

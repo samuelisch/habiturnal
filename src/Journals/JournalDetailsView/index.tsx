@@ -1,24 +1,25 @@
-import { useContext, useEffect, useState } from "react";
-import { FaBookmark, FaRegBookmark } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom"
-import { UserContext } from "../../App/ProtectedContainer";
-import Loading from "../../assets/Loading";
-import { useAppSelector } from "../../reducers/hooks";
-import { createLike, removeLike, selectAllJournalLikes } from "../../reducers/journalLikeSlice";
-import journalCalls, { JournalType } from "../../services/journals";
-import { calcReadTime, formatDate } from "../../utils/utilfunc";
+import { useContext, useEffect, useState } from 'react';
+import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { UserContext } from '../../App/ProtectedContainer';
+import Loading from '../../assets/Loading';
+import { useAppSelector } from '../../reducers/hooks';
+import { createLike, removeLike, selectAllJournalLikes } from '../../reducers/journalLikeSlice';
+import journalCalls from '../../services/journals';
+import { calcReadTime, formatDate } from '../../utils/utilfunc';
 import styles from './JournalDetailsView.module.scss';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { AiOutlineEdit } from 'react-icons/ai';
-import { remove } from "../../reducers/journalsSlice";
+import { remove } from '../../reducers/journalsSlice';
+import { JournalType } from '../../utils/types';
 
 const JournalDetailsView = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useContext(UserContext);
-  const [journal, setJournal] = useState<JournalType | null>(null)
+  const [journal, setJournal] = useState<JournalType | null>(null);
   const [saved, setSaved] = useState<boolean>(false);
   const likedJournals = useAppSelector(selectAllJournalLikes);
 
@@ -32,15 +33,15 @@ const JournalDetailsView = () => {
             setJournal(singleJournal as JournalType);
           }
         } catch (error) {
-          console.error(error)
+          console.error(error);
         }
       }
-    })()
+    })();
 
     return () => {
       fetching = false;
-    }
-  }, [id, user])
+    };
+  }, [id, user]);
 
   useEffect(() => {
     if (likedJournals && journal) {
@@ -51,35 +52,35 @@ const JournalDetailsView = () => {
         setSaved(false);
       }
     }
-  }, [likedJournals, journal])
+  }, [likedJournals, journal]);
 
   const savePost = async () => {
     if (user && journal) {
       const likesObj = {
         user: user.id,
-        journals: journal.id
-      }
-      
+        journals: journal.id,
+      };
+
       await journalCalls.createJournalLike(likesObj);
       dispatch(createLike(journal));
       setSaved(true);
     }
-  }
+  };
 
   const unSavePost = async () => {
     if (journal && user) {
-      await journalCalls.deleteJournalLike(journal.id, user.id)
-      dispatch(removeLike(journal))
+      await journalCalls.deleteJournalLike(journal.id, user.id);
+      dispatch(removeLike(journal));
       setSaved(false);
     }
-  }
+  };
 
   const formattedDate = () => {
     if (journal) {
       return formatDate(journal.created_date);
     }
     return '';
-  }
+  };
 
   if (!journal || !user) {
     return <Loading />;
@@ -88,18 +89,20 @@ const JournalDetailsView = () => {
   const deleteJournal = async () => {
     await journalCalls.deleteJournal(journal.id);
     dispatch(remove(journal.id));
-    navigate('/home')
-  }
+    navigate('/home');
+  };
 
   const editJournal = () => {
-    navigate(`/journals/edit/${journal.id}`)
-  }
+    navigate(`/journals/edit/${journal.id}`);
+  };
 
   return (
     <div className={styles.Container}>
       <div className={styles.HeaderContainer}>
         <div>
-          <div className={styles.Author} onClick={() => navigate(`/user/${journal.user}`)}>{journal.owner}</div>
+          <div className={styles.Author} onClick={() => navigate(`/user/${journal.user}`)}>
+            {journal.owner}
+          </div>
           <div className={styles.TimeDate}>
             <span className={styles.Date}>{formattedDate()}</span>
             <span className={styles.Divider}> - </span>
@@ -107,28 +110,29 @@ const JournalDetailsView = () => {
           </div>
         </div>
         <div>
-          {saved 
-            ? <FaBookmark className={styles.Unlike} size="25px" onClick={unSavePost} />
-            : <FaRegBookmark className={styles.Like} size="25px" onClick={savePost} />
-          }
+          {saved ? (
+            <FaBookmark className={styles.Unlike} size="25px" onClick={unSavePost} />
+          ) : (
+            <FaRegBookmark className={styles.Like} size="25px" onClick={savePost} />
+          )}
         </div>
       </div>
       <div className={styles.Title}>{journal.title}</div>
       <div className={styles.Content}>{journal.content}</div>
-      {user.id === journal.user 
-        ? 
+      {user.id === journal.user ? (
         <div className={styles.BtnContainer}>
           <div className={styles.EditBtn}>
-            <AiOutlineEdit onClick={editJournal} className={styles.Edit} size='25px' />
+            <AiOutlineEdit onClick={editJournal} className={styles.Edit} size="25px" />
           </div>
           <div className={styles.DeleteBtn}>
-            <RiDeleteBin6Line onClick={deleteJournal} className={styles.Delete} size='25px' />
+            <RiDeleteBin6Line onClick={deleteJournal} className={styles.Delete} size="25px" />
           </div>
         </div>
-        : ''
-      }
+      ) : (
+        ''
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default JournalDetailsView
+export default JournalDetailsView;

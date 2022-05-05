@@ -1,35 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { JournalInputType, JournalType, LikesInputType } from '../utils/types';
 import { token } from './login';
 
 const baseUrl = 'http://localhost:8000/api/journals';
-
-export interface JournalInputType {
-  title: string;
-  content: string;
-  user: string | number;
-  owner: string;
-}
-
-export interface JournalType {
-  id: string | number;
-  title: string;
-  content: string;
-  user: string | number;
-  owner: string;
-  created_date: string;
-  location: string;
-}
-
-export interface LikesType {
-  id: string | number;
-  user: string | number;
-  journals: string | number;
-}
-
-export interface LikesInputType {
-  user: string | number;
-  journals: string | number;
-}
 
 const getJournals = async (): Promise<AxiosResponse | JournalType[]> => {
   const config: AxiosRequestConfig = {
@@ -71,14 +44,17 @@ const createJournal = async (
   return response.data;
 };
 
-const updateJournal = async (journalObj: JournalInputType, id?: string | number): Promise<AxiosResponse | JournalType> => {
+const updateJournal = async (
+  journalObj: JournalInputType,
+  id?: string | number
+): Promise<AxiosResponse | JournalType> => {
   const config: AxiosRequestConfig = {
-    headers: {Authorization: token},
+    headers: { Authorization: token },
   };
 
   const response = await axios.put(`${baseUrl}/journal-update/${id}`, journalObj, config);
-  return response.data
-}
+  return response.data;
+};
 
 const deleteJournal = async (journalId: string | number): Promise<AxiosResponse> => {
   const config: AxiosRequestConfig = {
@@ -87,16 +63,18 @@ const deleteJournal = async (journalId: string | number): Promise<AxiosResponse>
 
   const response = await axios.delete(`${baseUrl}/journal-delete/${journalId}`, config);
   return response.data;
-}
+};
 
-const getJournalLikesByUserId = async (userId: string | number): Promise<AxiosResponse | JournalType[]> => {
+const getJournalLikesByUserId = async (
+  userId: string | number
+): Promise<AxiosResponse | JournalType[]> => {
   const config: AxiosRequestConfig = {
     headers: { Authorization: token },
   };
 
   const response = await axios.get(`${baseUrl}/journal-list-user-likes/${userId}`, config);
   return response.data;
-}
+};
 
 const createJournalLike = async (likesObj: LikesInputType): Promise<AxiosResponse> => {
   const config: AxiosRequestConfig = {
@@ -105,16 +83,19 @@ const createJournalLike = async (likesObj: LikesInputType): Promise<AxiosRespons
 
   const response = await axios.post(`${baseUrl}/likes-create/`, likesObj, config);
   return response.data;
-}
+};
 
-const deleteJournalLike = async (journalId: string | number, userId: string | number): Promise<AxiosResponse> => {
+const deleteJournalLike = async (
+  journalId: string | number,
+  userId: string | number
+): Promise<AxiosResponse> => {
   const config: AxiosRequestConfig = {
     headers: { Authorization: token },
   };
 
   const response = await axios.delete(`${baseUrl}/likes-delete/${journalId}/${userId}`, config);
   return response.data;
-}
+};
 
 const journalCalls = {
   getJournals,

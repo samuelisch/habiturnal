@@ -2,11 +2,12 @@ import React, { FormEvent, useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../assets/Button';
 import { UserContext } from '../../App/ProtectedContainer';
-import journalCalls, { JournalType } from '../../services/journals';
+import journalCalls from '../../services/journals';
 import styles from './EditJournalForm.module.scss';
 import { useAppDispatch, useAppSelector } from '../../reducers/hooks';
 import { update, selectAllJournals } from '../../reducers/journalsSlice';
 import { ImCross } from 'react-icons/im';
+import { JournalType } from '../../utils/types';
 
 const EditJournalForm = () => {
   const { id } = useParams();

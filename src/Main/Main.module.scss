@@ -34,8 +34,8 @@
   padding: 8px 5px;
   margin: 10px 0;
   box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
-  transition: background-color .1s;
-  
+  transition: background-color 0.1s;
+
   &:hover {
     background-color: #f6f6f6;
     cursor: pointer;
@@ -45,7 +45,7 @@
 .SignupButton {
   @extend .LoginButton;
   background-color: #6b79f4;
-  
+
   &:hover {
     background-color: $label-purple;
   }

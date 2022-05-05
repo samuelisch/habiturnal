@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import journalCalls, { JournalType } from '../../services/journals';
+import journalCalls from '../../services/journals';
 import { calcReadTime } from '../../utils/utilfunc';
 import styles from './JournalSingle.module.scss';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
@@ -10,6 +10,7 @@ import { UserContext } from '../../App/ProtectedContainer';
 import { useDispatch } from 'react-redux';
 import { createLike, removeLike, selectAllJournalLikes } from '../../reducers/journalLikeSlice';
 import { useAppSelector } from '../../reducers/hooks';
+import { JournalType } from '../../utils/types';
 
 interface Props {
   journal: JournalType;
@@ -18,7 +19,7 @@ interface Props {
 const JournalSingle = ({ journal }: Props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useContext(UserContext)
+  const user = useContext(UserContext);
   const [saved, setSaved] = useState<boolean>(false);
   const likedJournals = useAppSelector(selectAllJournalLikes);
 
@@ -31,28 +32,28 @@ const JournalSingle = ({ journal }: Props) => {
         setSaved(false);
       }
     }
-  }, [likedJournals, journal])
+  }, [likedJournals, journal]);
 
   const savePost = async () => {
     if (user && journal) {
       const likesObj = {
         user: user.id,
-        journals: journal.id
-      }
-      
+        journals: journal.id,
+      };
+
       await journalCalls.createJournalLike(likesObj);
       dispatch(createLike(journal));
       setSaved(true);
     }
-  }
+  };
 
   const unSavePost = async () => {
     if (journal && user) {
-      await journalCalls.deleteJournalLike(journal.id, user.id)
-      dispatch(removeLike(journal))
+      await journalCalls.deleteJournalLike(journal.id, user.id);
+      dispatch(removeLike(journal));
       setSaved(false);
     }
-  }
+  };
 
   const openJournal = () => {
     navigate(`/journals/view/${journal.id}`);
@@ -88,10 +89,11 @@ const JournalSingle = ({ journal }: Props) => {
           <span className={styles.Divider}> - </span>
         </div>
         <div>
-          {saved 
-          ? <FaBookmark className={styles.Unlike} size="15px" onClick={unSavePost} />
-          : <FaRegBookmark className={styles.Like} size="15px" onClick={savePost} />
-          }
+          {saved ? (
+            <FaBookmark className={styles.Unlike} size="15px" onClick={unSavePost} />
+          ) : (
+            <FaRegBookmark className={styles.Like} size="15px" onClick={savePost} />
+          )}
         </div>
       </div>
     </div>

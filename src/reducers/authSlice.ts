@@ -1,16 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { setToken } from '../services/login';
+import { AuthSchema, ErrorPayload } from '../utils/types';
 import { RootState } from './store';
-
-export interface AuthSchema {
-  access: string;
-  refresh: string;
-}
-
-export interface ErrorPayload {
-  data: string;
-  status: string;
-}
 
 interface AuthState {
   data: AuthSchema | null;
@@ -53,7 +44,7 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.errors = null;
       state.didComplete = true;
-      setToken(payload)
+      setToken(payload);
       localStorage.setItem('token', JSON.stringify(payload));
     },
     fail: (state, action: PayloadAction<Array<ErrorPayload>>) => {

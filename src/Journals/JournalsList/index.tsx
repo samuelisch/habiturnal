@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App/ProtectedContainer';
 import { useAppDispatch, useAppSelector } from '../../reducers/hooks';
 import { fetchJournals, selectAllJournals } from '../../reducers/journalsSlice';
-import journalCalls, { JournalType } from '../../services/journals';
+import journalCalls from '../../services/journals';
+import { JournalType } from '../../utils/types';
 import JournalSingle from '../JournalSingle';
 import styles from './JournalsList.module.scss';
 
@@ -34,12 +35,10 @@ const JournalsList = ({ filter, value }: Props) => {
             setJournals(selectedJournals);
           }
         } else if (filter === 'saved' && value) {
-          const selectedJournals = await journalCalls.getJournalLikesByUserId(value)
+          const selectedJournals = await journalCalls.getJournalLikesByUserId(value);
           setJournals(selectedJournals as JournalType[]);
         } else if (filter === 'nearby') {
-          const selectedJournals = allJournals.filter(
-            journal => journal.location === value
-          );
+          const selectedJournals = allJournals.filter(journal => journal.location === value);
           setJournals(selectedJournals);
         } else {
           setJournals(allJournals);

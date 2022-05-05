@@ -4,10 +4,10 @@ import Navbar from '../../assets/Navbar';
 import { invalidate, populate } from '../../reducers/authSlice';
 import { useAppDispatch } from '../../reducers/hooks';
 import { initLikes } from '../../reducers/journalLikeSlice';
-import { UserSchema } from '../../reducers/usersSlice';
 import journalCalls from '../../services/journals';
 import { setToken } from '../../services/login';
 import userCalls from '../../services/users';
+import { UserSchema } from '../../utils/types';
 import styles from './ProtectedContainer.module.scss';
 
 export const UserContext = createContext<UserSchema | null>(null);
@@ -60,7 +60,7 @@ const ProtectedContainer = ({ children }: Props) => {
     (async () => {
       if (user) {
         const likedJournals = await journalCalls.getJournalLikesByUserId(user.id);
-        dispatch(initLikes(likedJournals))
+        dispatch(initLikes(likedJournals));
       }
     })();
   }, [user, dispatch]);

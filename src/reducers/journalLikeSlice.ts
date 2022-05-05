@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { JournalType } from '../services/journals';
-import { ErrorPayload } from './authSlice';
+import { ErrorPayload, JournalType } from '../utils/types';
 import { RootState } from './store';
 
 interface JournalsLikesState {
@@ -13,7 +12,7 @@ const initialState: JournalsLikesState = {
   data: [],
   isLoading: false,
   errors: null,
-}
+};
 
 export const journalLikeSlice = createSlice({
   name: 'journalLikes',
@@ -32,8 +31,8 @@ export const journalLikeSlice = createSlice({
       state.data = state.data.filter(data => data.id !== id);
       state.isLoading = false;
     },
-  }
-})
+  },
+});
 
 export const { initLikes, createLike, removeLike } = journalLikeSlice.actions;
 

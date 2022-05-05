@@ -1,15 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import userCalls from '../services/users';
-import { ErrorPayload } from './authSlice';
+import { ErrorPayload, UserSchema } from '../utils/types';
 import { store, RootState } from './store';
-
-export interface UserSchema {
-  id: string | number;
-  username: string;
-  location: string;
-  date_joined: string;
-  last_login: string;
-}
 
 interface UsersState {
   data: UserSchema[];
@@ -32,9 +24,9 @@ export const userSlice = createSlice({
       state.isLoading = false;
     },
     create: (state, action: PayloadAction<object>) => {
-      state.data.push(action.payload as UserSchema)
+      state.data.push(action.payload as UserSchema);
       state.isLoading = false;
-    }
+    },
   },
 });
 

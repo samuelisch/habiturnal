@@ -1,18 +1,11 @@
 import React, { FormEvent, useState } from 'react';
 import Button from '../../assets/Button';
-import loginCalls, { setToken, TokenSchema } from '../../services/login';
+import loginCalls, { setToken } from '../../services/login';
 import { useDispatch } from 'react-redux';
 import { fetch, success, fail } from '../../reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.scss';
-
-export interface DecodedTokenSchema {
-  token_type: string;
-  exp: number | string;
-  iat: number | string;
-  jti: string;
-  user_id: number | string;
-}
+import { DecodedTokenSchema, TokenSchema } from '../../utils/types';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -28,7 +21,7 @@ const Login = () => {
       const tokens = await loginCalls.loginUser(credentials);
       if (tokens) {
         dispatch(success(tokens));
-        const decodedToken = await loginCalls.getJwtDetails()
+        const decodedToken = await loginCalls.getJwtDetails();
         localStorage.setItem('tokenDetails', JSON.stringify(decodedToken as DecodedTokenSchema));
         setToken(tokens as TokenSchema);
         navigate('/home');

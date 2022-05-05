@@ -43,14 +43,14 @@
 
 .Unlike {
   color: $label-red;
-  
+
   &:hover {
     cursor: pointer;
   }
 }
 
 .Like {
-  transition: color .1s;
+  transition: color 0.1s;
 
   &:hover {
     color: $label-red;
@@ -70,7 +70,7 @@
   background: inherit;
   border: none;
   border-bottom: 1px solid transparent;
-  transition: border-bottom .1s, color .1s;
+  transition: border-bottom 0.1s, color 0.1s;
 
   &:hover {
     cursor: pointer;

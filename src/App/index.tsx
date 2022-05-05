@@ -19,32 +19,46 @@ const App = (): ReactElement | null => {
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/home" element={
-          <ProtectedContainer>
-            <Home />
-          </ProtectedContainer>
-        } />
-        <Route path="/user/:id" element={
-          <ProtectedContainer>
-            <User />
-          </ProtectedContainer>
-        } />
-        <Route path="/journals/create" element={
-          <ProtectedContainer>
-            <CreateJournalForm />
-          </ProtectedContainer>
-        } />
-        <Route path="/journals/edit/:id" element={
-          <ProtectedContainer>
-            <EditJournalForm />
-          </ProtectedContainer>
-        }
+        <Route
+          path="/home"
+          element={
+            <ProtectedContainer>
+              <Home />
+            </ProtectedContainer>
+          }
         />
-        <Route path="/journals/view/:id" element={
-          <ProtectedContainer>
-            <JournalDetailsView />
-          </ProtectedContainer>
-        } />
+        <Route
+          path="/user/:id"
+          element={
+            <ProtectedContainer>
+              <User />
+            </ProtectedContainer>
+          }
+        />
+        <Route
+          path="/journals/create"
+          element={
+            <ProtectedContainer>
+              <CreateJournalForm />
+            </ProtectedContainer>
+          }
+        />
+        <Route
+          path="/journals/edit/:id"
+          element={
+            <ProtectedContainer>
+              <EditJournalForm />
+            </ProtectedContainer>
+          }
+        />
+        <Route
+          path="/journals/view/:id"
+          element={
+            <ProtectedContainer>
+              <JournalDetailsView />
+            </ProtectedContainer>
+          }
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
