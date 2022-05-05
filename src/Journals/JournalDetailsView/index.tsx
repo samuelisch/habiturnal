@@ -40,7 +40,6 @@ const JournalDetailsView = () => {
 
   useEffect(() => {
     if (likedJournals && journal) {
-      console.log(likedJournals);
       const response = likedJournals.filter(likedJournal => likedJournal.id === journal.id);
       if (response.length) {
         setSaved(true);
