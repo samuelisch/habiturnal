@@ -33,7 +33,9 @@ const JournalsList = ({ filter, value }: Props) => {
             );
             setJournals(selectedJournals);
           }
-        } else if (filter === 'saved') {
+        } else if (filter === 'saved' && value) {
+          const selectedJournals = await journalCalls.getJournalLikesByUserId(value)
+          setJournals(selectedJournals as JournalType[]);
         } else if (filter === 'nearby') {
           const selectedJournals = allJournals.filter(
             journal => journal.location === value

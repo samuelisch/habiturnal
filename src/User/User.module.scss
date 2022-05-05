@@ -24,3 +24,24 @@
 .DateText {
   margin-left: 10px;
 }
+
+.TabContainer {
+  width: 100%;
+  display: flex;
+}
+
+.Tab {
+  padding: 8px;
+  margin-right: 10px;
+
+  &:hover {
+    cursor: pointer;
+    color: $label-blue;
+  }
+}
+
+.TabSelected {
+  @extend .Tab;
+  border-bottom: 2px solid $label-blue;
+  color: $label-blue;
+}
