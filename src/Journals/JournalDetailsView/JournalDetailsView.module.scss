@@ -17,6 +17,11 @@
 .Author {
   margin: 10px 0;
   font-size: 1.2rem;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }
 
 .TimeDate {

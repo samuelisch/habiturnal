@@ -98,7 +98,7 @@ const JournalDetailsView = () => {
     <div className={styles.Container}>
       <div className={styles.HeaderContainer}>
         <div>
-          <div className={styles.Author}>{journal.owner}</div>
+          <div className={styles.Author} onClick={() => navigate(`/user/${journal.user}`)}>{journal.owner}</div>
           <div className={styles.TimeDate}>
             <span className={styles.Date}>{formattedDate()}</span>
             <span className={styles.Divider}> - </span>
