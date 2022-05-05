@@ -89,12 +89,12 @@ const createJournalLike = async (likesObj: LikesInputType): Promise<AxiosRespons
   return response.data;
 }
 
-const deleteJournalLike = async (id: string | number): Promise<AxiosResponse> => {
+const deleteJournalLike = async (journalId: string | number, userId: string | number): Promise<AxiosResponse> => {
   const config: AxiosRequestConfig = {
     headers: { Authorization: token },
   };
 
-  const response = await axios.delete(`${baseUrl}/likes-delete/${id}`, config);
+  const response = await axios.delete(`${baseUrl}/likes-delete/${journalId}/${userId}`, config);
   return response.data;
 }
 

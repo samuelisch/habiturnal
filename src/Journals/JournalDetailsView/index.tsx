@@ -1,15 +1,20 @@
 import { useContext, useEffect, useState } from "react";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom"
 import { UserContext } from "../../App/ProtectedContainer";
 import Loading from "../../assets/Loading";
+import { createLike } from "../../reducers/journalLikeSlice";
 import journalCalls, { JournalType } from "../../services/journals";
 import { calcReadTime, formatDate } from "../../utils/utilfunc";
 import styles from './JournalDetailsView.module.scss';
 
 const JournalDetailsView = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const user = useContext(UserContext);
   const [journal, setJournal] = useState<JournalType | null>(null)
+  const [saved, setSaved] = useState<boolean>(false);
 
   useEffect(() => {
     let fetching = true;
@@ -32,6 +37,27 @@ const JournalDetailsView = () => {
     }
   }, [id, user])
 
+  const savePost = async () => {
+    if (user && journal) {
+      const likesObj = {
+        user: user.id,
+        journals: journal.id
+      }
+      
+      const like = await journalCalls.createJournalLike(likesObj);
+      dispatch(createLike(like));
+      setSaved(true);
+    }
+  }
+
+  const unSavePost = async () => {
+    if (journal && user) {
+      await journalCalls.deleteJournalLike(journal.id, user.id)
+      setSaved(false);
+    }
+  }
+
+
   const formattedDate = () => {
     if (journal) {
       return formatDate(journal.created_date);
@@ -45,13 +71,20 @@ const JournalDetailsView = () => {
 
   return (
     <div className={styles.Container}>
-      <div>
-      {/* add date created, ability to save post, beautify styling */}
-        <span className={styles.Author}>{journal.owner}</span>
-        <div className={styles.TimeDate}>
-          <span className={styles.Date}>{formattedDate()}</span>
-          <span className={styles.Divider}> - </span>
-          <span className={styles.Time}>{calcReadTime(journal.content.length)} min read</span>
+      <div className={styles.HeaderContainer}>
+        <div>
+          <div className={styles.Author}>{journal.owner}</div>
+          <div className={styles.TimeDate}>
+            <span className={styles.Date}>{formattedDate()}</span>
+            <span className={styles.Divider}> - </span>
+            <span className={styles.Time}>{calcReadTime(journal.content.length)} min read</span>
+          </div>
+        </div>
+        <div>
+          {saved 
+            ? <FaBookmark className={styles.Unlike} size="25px" onClick={unSavePost} />
+            : <FaRegBookmark className={styles.Like} size="25px" onClick={savePost} />
+          }
         </div>
       </div>
       <div className={styles.Title}>{journal.title}</div>

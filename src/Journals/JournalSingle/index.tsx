@@ -34,8 +34,10 @@ const JournalSingle = ({ journal }: Props) => {
   }
 
   const unSavePost = async () => {
-    // await journalCalls.deleteJournalLike()
-    setSaved(false);
+    if (journal && user) {
+      await journalCalls.deleteJournalLike(journal.id, user.id)
+      setSaved(false);
+    }
   }
 
   const openJournal = () => {
