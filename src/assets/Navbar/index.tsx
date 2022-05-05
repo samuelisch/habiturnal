@@ -1,6 +1,5 @@
 import styles from './Navbar.module.scss';
 import { BiLogOut } from 'react-icons/bi';
-import { GiBookshelf } from 'react-icons/gi';
 import { CgProfile } from 'react-icons/cg';
 import { SiLivejournal } from 'react-icons/si';
 import { AiOutlineHome } from 'react-icons/ai';

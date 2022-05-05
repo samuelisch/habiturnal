@@ -4,9 +4,12 @@ import Button from '../../assets/Button';
 import userCalls from '../../services/users';
 import styles from './Signup.module.scss';
 import ReactFlagsSelect from 'react-flags-select';
+import { create } from '../../reducers/usersSlice';
+import { useAppDispatch } from '../../reducers/hooks';
 
 const Signup = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [createUsername, setCreateUsername] = useState<string>('');
   const [createPassword, setCreatePassword] = useState<string>('');
   const [createLocation, setCreateLocation] = useState<string>('');
@@ -20,7 +23,7 @@ const Signup = () => {
     };
     try {
       const createdUser = await userCalls.createUser(newUser);
-      console.log(createdUser);
+      dispatch(create(createdUser))
 
       // reset form
       setCreateUsername('');

@@ -31,7 +31,6 @@ const User = () => {
         try {
           const user = await userCalls.getUserById(id);
           if (fetching) {
-            console.log(user);
             setSelectedUser(user as UserSchema);
           }
         } catch (error) {

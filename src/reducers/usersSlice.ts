@@ -31,10 +31,14 @@ export const userSlice = createSlice({
       state.data = action.payload as UserSchema[];
       state.isLoading = false;
     },
+    create: (state, action: PayloadAction<object>) => {
+      state.data.push(action.payload as UserSchema)
+      state.isLoading = false;
+    }
   },
 });
 
-export const { init } = userSlice.actions; // remove init in future
+export const { init, create } = userSlice.actions; // remove init in future
 
 export const fetchUsers = createAsyncThunk('users/init', async (): Promise<void> => {
   const data = await userCalls.getUsers();
