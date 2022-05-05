@@ -1,7 +1,5 @@
 import styles from './Navbar.module.scss';
-import { BsFillJournalBookmarkFill } from 'react-icons/bs';
 import { BiLogOut } from 'react-icons/bi';
-import { FiSettings } from 'react-icons/fi';
 import { GiBookshelf } from 'react-icons/gi';
 import { CgProfile } from 'react-icons/cg';
 import { SiLivejournal } from 'react-icons/si';
@@ -38,9 +36,6 @@ const Navbar = () => {
         </div>
         <div className={styles.Icon} onClick={() => navigate('/journals/create')}>
           <SiLivejournal size='25px' />
-        </div>
-        <div className={styles.Icon}>
-          <FiSettings size='25px' />
         </div>
         <div className={styles.Icon} onClick={logout}>
           <BiLogOut size='25px' />
