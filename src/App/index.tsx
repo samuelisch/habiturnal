@@ -11,57 +11,61 @@ import CreateJournalForm from '../Journals/CreateJournalForm';
 import User from '../User';
 import Main from '../Main';
 import EditJournalForm from '../Journals/EditJournalForm';
+import { ToastContainer } from 'react-toastify';
 
 const App = (): ReactElement | null => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route
-          path="/home"
-          element={
-            <ProtectedContainer>
-              <Home />
-            </ProtectedContainer>
-          }
-        />
-        <Route
-          path="/user/:id"
-          element={
-            <ProtectedContainer>
-              <User />
-            </ProtectedContainer>
-          }
-        />
-        <Route
-          path="/journals/create"
-          element={
-            <ProtectedContainer>
-              <CreateJournalForm />
-            </ProtectedContainer>
-          }
-        />
-        <Route
-          path="/journals/edit/:id"
-          element={
-            <ProtectedContainer>
-              <EditJournalForm />
-            </ProtectedContainer>
-          }
-        />
-        <Route
-          path="/journals/view/:id"
-          element={
-            <ProtectedContainer>
-              <JournalDetailsView />
-            </ProtectedContainer>
-          }
-        />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedContainer>
+                <Home />
+              </ProtectedContainer>
+            }
+          />
+          <Route
+            path="/user/:id"
+            element={
+              <ProtectedContainer>
+                <User />
+              </ProtectedContainer>
+            }
+          />
+          <Route
+            path="/journals/create"
+            element={
+              <ProtectedContainer>
+                <CreateJournalForm />
+              </ProtectedContainer>
+            }
+          />
+          <Route
+            path="/journals/edit/:id"
+            element={
+              <ProtectedContainer>
+                <EditJournalForm />
+              </ProtectedContainer>
+            }
+          />
+          <Route
+            path="/journals/view/:id"
+            element={
+              <ProtectedContainer>
+                <JournalDetailsView />
+              </ProtectedContainer>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+      <ToastContainer />
+    </>
   );
 };
 
