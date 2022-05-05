@@ -87,7 +87,7 @@ const Signup = () => {
           onChange={e => setCreatePassword(e.target.value)}
           placeholder="Password"
         />
-        <input 
+        <input
           aria-label="confirmPasswordInput"
           className={styles.Input}
           type="password"

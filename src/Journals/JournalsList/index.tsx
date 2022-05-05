@@ -60,7 +60,7 @@ const JournalsList = ({ filter, value }: Props) => {
       <div className={styles.End}>
         <span className={styles.EndText}>There's a whole lotta nothing here.</span>
       </div>
-    )
+    );
   }
 
   return (

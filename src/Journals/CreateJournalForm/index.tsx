@@ -40,7 +40,7 @@ const CreateJournalForm = () => {
       dispatch(create(newJournal));
       setTitle('');
       setContent('');
-      PositiveToast('Successfully published journal')
+      PositiveToast('Successfully published journal');
       navigate(`/journals/view/${newJournal.id}`);
     } catch (error: any) {
       if (error.response) {
@@ -58,10 +58,10 @@ const CreateJournalForm = () => {
   }, [title, content]);
 
   const handleInputChange = (e: React.FormEvent) => {
-    const textbox = e.target as HTMLTextAreaElement
+    const textbox = e.target as HTMLTextAreaElement;
     textbox.style.height = '0';
-    textbox.style.height = textbox.scrollHeight + "px"
-  }
+    textbox.style.height = textbox.scrollHeight + 'px';
+  };
 
   if (!user) {
     return null;
