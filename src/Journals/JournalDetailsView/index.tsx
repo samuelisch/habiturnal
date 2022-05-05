@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { UserContext } from "../../App/ProtectedContainer";
 import Loading from "../../assets/Loading";
 import { useAppSelector } from "../../reducers/hooks";
@@ -9,10 +9,13 @@ import { createLike, removeLike, selectAllJournalLikes } from "../../reducers/jo
 import journalCalls, { JournalType } from "../../services/journals";
 import { calcReadTime, formatDate } from "../../utils/utilfunc";
 import styles from './JournalDetailsView.module.scss';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { AiOutlineEdit } from 'react-icons/ai';
 
 const JournalDetailsView = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useContext(UserContext);
   const [journal, setJournal] = useState<JournalType | null>(null)
   const [saved, setSaved] = useState<boolean>(false);
@@ -77,8 +80,18 @@ const JournalDetailsView = () => {
     return '';
   }
 
-  if (!journal) {
+  if (!journal || !user) {
     return <Loading />;
+  }
+
+  const deleteJournal = async () => {
+    await journalCalls.deleteJournal(journal.id);
+    navigate('/home')
+  }
+
+  const editJournal = () => {
+    console.log('editing journal...')
+    // OPEN JOURNAL FORM TO EDIT JOURNAL DETAILS
   }
 
   return (
@@ -101,6 +114,18 @@ const JournalDetailsView = () => {
       </div>
       <div className={styles.Title}>{journal.title}</div>
       <div className={styles.Content}>{journal.content}</div>
+      {user.id === journal.user 
+        ? 
+        <div className={styles.BtnContainer}>
+          <div className={styles.EditBtn}>
+            <AiOutlineEdit onClick={editJournal} className={styles.Edit} size='25px' />
+          </div>
+          <div className={styles.DeleteBtn}>
+            <RiDeleteBin6Line onClick={deleteJournal} className={styles.Delete} size='25px' />
+          </div>
+        </div>
+        : ''
+      }
     </div>
   )
 }

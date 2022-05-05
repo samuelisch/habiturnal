@@ -76,7 +76,7 @@ const deleteJournal = async (journalId: string | number): Promise<AxiosResponse>
     headers: { Authorization: token },
   };
 
-  const response = await axios.post(`${baseUrl}/journal-delete/${journalId}`, config);
+  const response = await axios.delete(`${baseUrl}/journal-delete/${journalId}`, config);
   return response.data;
 }
 

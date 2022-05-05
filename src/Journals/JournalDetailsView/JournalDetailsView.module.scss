@@ -5,7 +5,8 @@
   box-shadow: $box-shadow-card;
   border-radius: $border-radius-default;
   padding: 15px;
-  padding-bottom: 50px;
+  padding-bottom: 75px;
+  position: relative;
 }
 
 .HeaderContainer {
@@ -49,5 +50,53 @@
   &:hover {
     color: $label-red;
     cursor: pointer;
+  }
+}
+
+.BtnContainer {
+  display: flex;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.Button {
+  margin: 0 20px;
+  background: inherit;
+  border: none;
+  border-bottom: 1px solid transparent;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.EditBtn {
+  @extend .Button;
+
+  &:hover {
+    border-bottom: 1px solid $color-sky-blue;
+    color: $color-sky-blue;
+  }
+}
+
+.Edit {
+  &:hover {
+    color: $color-sky-blue;
+  }
+}
+
+.DeleteBtn {
+  @extend .Button;
+
+  &:hover {
+    border-bottom: 1px solid $label-red;
+    color: $label-red;
+  }
+}
+
+.Delete {
+  &:hover {
+    color: $label-red;
   }
 }
