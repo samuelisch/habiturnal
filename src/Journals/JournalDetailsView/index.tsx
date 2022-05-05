@@ -13,6 +13,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { remove } from '../../reducers/journalsSlice';
 import { JournalType } from '../../utils/types';
+import { PositiveToast } from '../../assets/Toast';
 
 const JournalDetailsView = () => {
   const { id } = useParams();
@@ -89,6 +90,7 @@ const JournalDetailsView = () => {
   const deleteJournal = async () => {
     await journalCalls.deleteJournal(journal.id);
     dispatch(remove(journal.id));
+    PositiveToast('Successfully deleted journal');
     navigate('/home');
   };
 

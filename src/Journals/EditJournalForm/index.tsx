@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../reducers/hooks';
 import { update, selectAllJournals } from '../../reducers/journalsSlice';
 import { ImCross } from 'react-icons/im';
 import { JournalType } from '../../utils/types';
+import { NegativeToast } from '../../assets/Toast';
 
 const EditJournalForm = () => {
   const { id } = useParams();
@@ -39,7 +40,14 @@ const EditJournalForm = () => {
 
   const updateJournal = async (e: FormEvent) => {
     e.preventDefault();
-    if (!user) return; // something's really wrong if this happens
+    if (!user) {
+      NegativeToast('Something went horribly wrong. Contact Sam.');
+      return;
+    }
+    if (empty) {
+      NegativeToast('A required field is empty');
+      return;
+    }
     try {
       const journalObject = {
         user: user.id,
@@ -80,7 +88,6 @@ const EditJournalForm = () => {
           className={styles.Button}
           type="button"
           text="Update"
-          disabled={empty}
           clickHandler={updateJournal}
         />
       </div>
