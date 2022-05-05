@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useState } from 'react';
+import React, { FormEvent, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../assets/Button';
 import { UserContext } from '../../App/ProtectedContainer';
@@ -6,6 +6,7 @@ import journalCalls, { JournalType } from '../../services/journals';
 import styles from './CreateJournalForm.module.scss';
 import { useAppDispatch } from '../../reducers/hooks';
 import { create } from '../../reducers/journalsSlice';
+import { ImCross } from 'react-icons/im';
 
 const CreateJournalForm = () => {
   const dispatch = useAppDispatch();
@@ -13,6 +14,7 @@ const CreateJournalForm = () => {
   const user = useContext(UserContext);
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const [empty, setEmpty] = useState<boolean>(true);
 
   const submitJournal = async (e: FormEvent) => {
     e.preventDefault();
@@ -25,9 +27,9 @@ const CreateJournalForm = () => {
         owner: user.username,
         location: user.location,
       };
-      const newJournal = await journalCalls.createJournal(journalObject) as JournalType;
+      const newJournal = (await journalCalls.createJournal(journalObject)) as JournalType;
       dispatch(create(newJournal));
-      navigate(`/journals/view/${newJournal.id}`)
+      navigate(`/journals/view/${newJournal.id}`);
 
       setTitle('');
       setContent('');
@@ -38,34 +40,53 @@ const CreateJournalForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (title.length && content.length) {
+      setEmpty(false);
+    } else {
+      setEmpty(true);
+    }
+  }, [title, content]);
+
+  if (!user) {
+    return null;
+  }
+
   return (
-    <div className={styles.Container}>
-      <h1>Journal Form</h1>
-      <form className={styles.FormContainer} onSubmit={submitJournal}>
-        <input
-          aria-label="journalTitle"
-          className={styles.TitleInput}
-          type="text"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          placeholder="Title"
-        />
-        <textarea
-          className={styles.ContentInput}
-          value={content}
-          onChange={e => setContent(e.target.value)}
-          autoComplete="off"
-          placeholder="What's been on? ..."
-        />
+    <>
+      <div className={styles.Sticky}>
+        <ImCross className={styles.Cancel} onClick={() => navigate(-1)} />
+        <span className={styles.Header}>{user.username}'s new entry</span>
         <Button
           className={styles.Button}
           type="button"
-          text="Cancel"
-          clickHandler={() => navigate(-1)}
+          text="Publish"
+          disabled={empty}
+          clickHandler={submitJournal}
         />
-        <Button className={styles.Button} type="submit" text="Complete reflection" />
-      </form>
-    </div>
+      </div>
+      <div className={styles.Container}>
+        <form className={styles.FormContainer}>
+          <input
+            aria-label="journalTitle"
+            className={styles.TitleInput}
+            type="text"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            placeholder="Title"
+            maxLength={50}
+          />
+          <textarea
+            className={styles.ContentInput}
+            value={content}
+            onChange={e => setContent(e.target.value)}
+            autoComplete="off"
+            placeholder="What's been on? ..."
+            maxLength={5000}
+          />
+        </form>
+      </div>
+    </>
   );
 };
 
