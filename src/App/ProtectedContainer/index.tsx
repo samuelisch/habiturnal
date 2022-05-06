@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../assets/Navbar';
+import { NegativeToast } from '../../assets/Toast';
 import { invalidate, populate } from '../../reducers/authSlice';
 import { useAppDispatch } from '../../reducers/hooks';
 import { initLikes } from '../../reducers/journalLikeSlice';
@@ -31,8 +32,8 @@ const ProtectedContainer = ({ children }: Props) => {
           const token = JSON.parse(tokenAuth);
           const tokenDetails = JSON.parse(detailsAuth);
           if (Date.now() >= tokenDetails.exp * 1000) {
-            console.error('token expired');
             dispatch(invalidate());
+            NegativeToast('Please login again: token expired');
             navigate('/login');
           }
           const user = await userCalls.getUserById(tokenDetails.user_id);
@@ -44,9 +45,11 @@ const ProtectedContainer = ({ children }: Props) => {
         } catch (err) {
           console.error(err);
           dispatch(invalidate());
+          NegativeToast('Please login');
           navigate('/login');
         }
       } else {
+        NegativeToast('Please login');
         navigate('/login');
       }
     })();
